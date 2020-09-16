@@ -1,0 +1,144 @@
+@import "./bootstrap.scss";
+
+body,
+html,
+#root {
+  height: 100%;
+  min-height: 100vh;
+  min-width: 550px;
+}
+
+.content {
+  height: 100%;
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  height: calc(100% - 56px);
+  padding-top: 56px;
+}
+
+.page-content {
+  padding: 10px 60px 20px 60px;
+  width: calc(100% - 240px);
+  margin-left: 240px;
+  transition: all 0.3s;
+  height: calc(100% - 56px);
+}
+
+.center-page-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    height: calc(100% - 94px) !important;
+    padding-top: 94px !important;
+  }
+
+  .page-content {
+    height: calc(100% + 94px) !important;
+    padding: 10px 10px 20px 10px;
+  }
+
+  .sidebar {
+    height: calc(100% - 94px) !important;
+  }
+
+  .fullscreen {
+    width: 100%;
+    margin-left: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@media (max-width: 1068px) and (min-width: 768px) {
+  .page-content {
+    padding: 10px 30px 20px 30px;
+  }
+}
+
+@media (max-width: 1668px) and (min-width: 1068px) {
+  .page-content {
+    padding: 10px 40px 20px 40px;
+  }
+}
+
+// Scroll Bar
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 10px 10px rgba(255, 255, 255, 0.15);
+  border: solid 2px transparent;
+  border-radius: 5px;
+}
+
+// NavBar
+
+.search-bar {
+  width: 100%;
+
+  input {
+    background-color: #191a1b;
+    border: 0;
+    color: #a9b1b9;
+  }
+
+  button {
+    background-color: #191a1b;
+    border: 0;
+  }
+}
+
+// Pages
+
+.feed-list {
+  hr {
+    margin-top: 2px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+  }
+
+  h5 {
+    margin-bottom: 2px;
+  }
+}
+
+// Player
+
+.plyr {
+  width: 100% !important;
+  height: auto !important;
+  border-radius: 5px 5px 0px 0px;
+}
+
+// Register
+
+.react-datepicker-wrapper {
+  display: block !important;
+  width: 100% !important;
+}
+
+.react-datepicker-popper {
+  z-index: 2;
+  top: 34px !important;
+  /* needed because we made it inline */
+}
+
+.react-datepicker-wrapper,
+.react-datepicker-wrapper .react-datepicker__input-container {
+  display: inline;
+}

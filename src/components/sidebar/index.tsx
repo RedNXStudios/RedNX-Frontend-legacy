@@ -1,8 +1,8 @@
 import React from "react";
 
-import SidebarStore, { StoreProps } from "../../undux/SidebarStore";
+import SidebarStore, { StoreProps } from "../../undux/SideBarStore";
 
-import styles from "./sidebar.module.scss";
+import styles from "./SideBar.module.scss";
 
 class SideBar extends React.Component<StoreProps> {
   render() {
