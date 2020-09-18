@@ -3,12 +3,17 @@ import AuthStore from "./undux/AuthStore";
 import Loading from "./pages/Loading";
 import Routes from "./routes";
 
+import "./utils/FontAwesome";
+import "./styles/global.scss";
+
 function App() {
   return (
     <Suspense fallback={<Loading />}>
-      <AuthStore.Container>
-        <Routes />
-      </AuthStore.Container>
+      <div className="content">
+        <AuthStore.Container>
+          <Routes />
+        </AuthStore.Container>
+      </div>
     </Suspense>
   );
 }

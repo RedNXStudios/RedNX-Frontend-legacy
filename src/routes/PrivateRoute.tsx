@@ -7,7 +7,7 @@ const PrivateRoute:React.FC<RouterPropsDOM> = ({ component: Component, ...rest }
   return store.get("isAuthenticated") ? (
     <Route component={Component} {...rest} />
   ) : (
-    <Redirect from="" to="login" />
+    <Redirect to="login" />
   );
 }
 
