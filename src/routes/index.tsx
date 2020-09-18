@@ -3,7 +3,6 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import AuthStore, { StoreProps } from "../undux/AuthStore";
 import SideBarStore from "../undux/SideBarStore";
 
-import PrivateRoute from "./PrivateRoute";
 import OnlyPublicRoute from './OnlyPublicRoute';
 
 const SideBar = React.lazy(() => import("../components/SideBar/SideBar"));

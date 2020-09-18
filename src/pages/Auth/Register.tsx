@@ -1,21 +1,26 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { withTranslation, WithTranslation } from "react-i18next";
+import Net from "../../utils/Net";
 
 import styles from "./Auth.module.scss";
 
-type IProps = {};
+interface IProps extends WithTranslation {}
 
-type IState = {
+interface IState {
   email?: string;
   username?: string;
   password?: string;
   confirmPassword?: string;
-  birthDay: string;
-  birthMonth: string;
-  birthYear: string;
+  birthDay?: string;
+  birthMonth?: string;
+  birthYear?: string;
   showPassword: boolean;
   ok: boolean;
-};
+  days: string[];
+  errorId: number;
+  errorMessage?: string;
+}
 
 class Register extends React.Component<IProps, IState> {
   constructor(props: IProps) {
@@ -25,17 +30,51 @@ class Register extends React.Component<IProps, IState> {
       username: "",
       password: "",
       confirmPassword: "",
-      birthDay: "",
-      birthMonth: "",
-      birthYear: "",
+      birthDay: "default",
+      birthMonth: "default",
+      birthYear: "default",
       showPassword: false,
       ok: true,
+      days: [],
+      errorId: -1,
     };
   }
 
+  changeMonth = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    let dayCount: number = 0;
+    switch (e.target.value) {
+      case "1":
+      case "3":
+      case "5":
+      case "7":
+      case "8":
+      case "10":
+      case "12":
+        dayCount = 31;
+        break;
+      case "2":
+        dayCount = 29;
+        break;
+      case "4":
+      case "6":
+      case "9":
+      case "11":
+        dayCount = 30;
+        break;
+    }
+    let days: string[] = [];
+    for (let i = 1; i <= dayCount; i++) {
+      days.push(i.toString());
+    }
+    this.setState({
+      birthMonth: e.target.value,
+      days: days,
+    });
+  };
+
   validateEmail(value?: string): boolean {
     if (value == null) return false;
-    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return emailRegex.test(String(value).toLowerCase());
   }
 
@@ -48,12 +87,14 @@ class Register extends React.Component<IProps, IState> {
   validatePassword(value?: string): boolean {
     if (value == null) return false;
     value = value.replace(/\s/g, "");
-    return value.length > 8;
+    return value.length >= 8;
   }
 
   validateConfirmPassword(value?: string, original?: string): boolean {
     if (value == null) return false;
     if (original == null) return false;
+    value = value.replace(/\s/g, "");
+    if (value.length < 8) return false;
     return value === original;
   }
 
@@ -64,7 +105,6 @@ class Register extends React.Component<IProps, IState> {
 
   validateMonth(value?: string): boolean {
     if (value == null) return false;
-    console.warn(value);
     return /^-?\d+$/.test(value);
   }
 
@@ -82,7 +122,44 @@ class Register extends React.Component<IProps, IState> {
     return true;
   }
 
+  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    this.setState({
+      errorId: -1,
+      errorMessage: undefined,
+    });
+    e.preventDefault();
+    Net.post("/api/auth/register", {
+      email: this.state.email,
+      username: this.state.username,
+      password: this.state.password,
+      confirmPassword: this.state.confirmPassword,
+      birthDate: `${this.state.birthDay}-${this.state.birthMonth}-${this.state.birthYear}`,
+      captcha: "",
+      Language: "en",
+    })
+      .then((e) => {
+        if (e.data.error) {
+          this.setState({
+            errorId: e.data.error.code,
+            errorMessage: e.data.error.message,
+          });
+          return;
+        }
+      })
+      .catch((e) => {
+        if (e.response.data && e.response.data.error) {
+          this.setState({
+            errorId: e.response.data.error.code,
+            errorMessage: e.response.data.error.message,
+          });
+          return;
+        }
+      })
+      .finally(() => {});
+  };
+
   render() {
+    const { t, i18n } = this.props;
     let date = new Date();
     let years = [];
     let possibleYear = date.getFullYear() - 1;
@@ -92,9 +169,19 @@ class Register extends React.Component<IProps, IState> {
     return (
       <div className={styles.container}>
         <div className={`${styles.wrapper} ${styles.registerWrapper}`}>
-          <form>
+          <form onSubmit={this.handleSubmit}>
             <div className={styles.logo}>
               <img src="images/logo-dark.svg" alt="Logo" />
+            </div>
+            <div
+              className={`${styles.errorBubble} ${
+                this.state.errorId > -1 && styles.errorBubbleShow
+              }`}
+            >
+              {this.state.errorId > -1 &&
+              i18n.exists("error.register." + this.state.errorId.toString())
+                ? t("error.register." + this.state.errorId.toString())
+                : this.state.errorMessage}
             </div>
             <div className={styles.inputWrap}>
               <input
@@ -221,19 +308,22 @@ class Register extends React.Component<IProps, IState> {
                     className={`${styles.select} ${
                       this.state.birthMonth && styles.hasVal
                     }`}
-                    onChange={(e) => {
-                      this.setState({
-                        birthMonth: e.target.value,
-                      });
-                    }}
+                    onChange={this.changeMonth}
                     value={this.state.birthMonth}
                   >
-                    <option disabled selected></option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
+                    <option disabled value="default"></option>
+                    <option value="1">{t("month.january")}</option>
+                    <option value="2">{t("month.february")}</option>
+                    <option value="3">{t("month.march")}</option>
+                    <option value="4">{t("month.april")}</option>
+                    <option value="5">{t("month.may")}</option>
+                    <option value="6">{t("month.june")}</option>
+                    <option value="7">{t("month.july")}</option>
+                    <option value="8">{t("month.august")}</option>
+                    <option value="9">{t("month.september")}</option>
+                    <option value="10">{t("month.october")}</option>
+                    <option value="11">{t("month.november")}</option>
+                    <option value="12">{t("month.december")}</option>
                   </select>
                   <span
                     className={`${styles.inputFocus} ${
@@ -254,12 +344,12 @@ class Register extends React.Component<IProps, IState> {
                     }}
                     value={this.state.birthDay}
                   >
-                    <option disabled selected></option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
+                    <option disabled value="default"></option>
+                    {this.state.days.map((day, index) => (
+                      <option key={index} value={day.toString()}>
+                        {day}
+                      </option>
+                    ))}
                   </select>
                   <span
                     className={`${styles.inputFocus} ${
@@ -280,9 +370,11 @@ class Register extends React.Component<IProps, IState> {
                     }}
                     value={this.state.birthYear}
                   >
-                    <option disabled selected></option>
-                    {years.map((year) => (
-                      <option value={year.toString()}>{year}</option>
+                    <option disabled value="default"></option>
+                    {years.map((year, index) => (
+                      <option key={index} value={year.toString()}>
+                        {year}
+                      </option>
                     ))}
                   </select>
                   <span
@@ -309,4 +401,4 @@ class Register extends React.Component<IProps, IState> {
   }
 }
 
-export default Register;
+export default withTranslation()(Register);

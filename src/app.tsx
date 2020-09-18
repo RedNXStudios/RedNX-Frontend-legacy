@@ -4,6 +4,7 @@ import Loading from "./pages/Loading";
 import Routes from "./routes";
 
 import "./utils/FontAwesome";
+import "./utils/I18next";
 import "./styles/global.scss";
 
 function App() {
