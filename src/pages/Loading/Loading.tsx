@@ -1,9 +1,11 @@
 import React from "react";
 
+import styles from "./Loading.module.scss";
+
 class Loading extends React.Component {
   render() {
     return (
-      <div className="center-page-content text-center">
+      <div className={`center-page-content text-center ${styles.content}`}>
         <h3>Loading...</h3>
         <svg
           width="50"

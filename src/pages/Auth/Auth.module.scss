@@ -3,7 +3,7 @@
   src: url(../../fonts/poppins/Poppins-Regular.ttf);
 }
 
-@font-face {
+/*@font-face {
   font-family: Poppins-Medium;
   src: url(../../fonts/poppins/Poppins-Medium.ttf);
 }
@@ -16,7 +16,7 @@
 @font-face {
   font-family: Poppins-SemiBold;
   src: url(../../fonts/poppins/Poppins-SemiBold.ttf);
-}
+}*/
 
 .container {
   width: 100%;
@@ -237,12 +237,6 @@ select:focus > option:checked {
   }
 }
 
-.ok {
-  &::before {
-    background: #007c06 !important;
-  }
-}
-
 .btnShowPass {
   font-size: 15px;
   color: #999;
@@ -270,6 +264,35 @@ select:focus > option:checked {
   &.active {
     color: #ff003d;
   }
+
+  &.paddingRight {
+    padding-right: 20px !important;
+  }
+}
+
+.checkIcon {
+  font-size: 15px;
+  color: #999;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 0;
+  padding-right: 5px;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+  color: #ff003d;
+
+  &.active {
+    color: #3BB54A;
+  }
 }
 
 .loginBtn {
@@ -286,10 +309,6 @@ select:focus > option:checked {
     font-family: Poppins-Regular;
     color: white;
     text-shadow: 2px 2px 8px #ffffff;
-  }
-
-  &.active {
-    background: #007c06;
   }
 }
 
@@ -313,4 +332,30 @@ select:focus > option:checked {
   visibility: visible !important;
   opacity: 1 !important;
   margin-bottom: 30px;
+}
+
+.modalContent {
+  background-color: #1A1717 !important;
+  -webkit-box-shadow: 0px 0px 37px -10px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 37px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 37px -10px rgba(0, 0, 0, 0.75);
+}
+
+.modalBody {
+  font-family: Poppins-Regular;
+  color: #999;
+}
+
+.modalFooter {
+  border-top: 1px solid rgb(20, 18, 18);
+}
+
+.svg {
+  margin-bottom: 20px;
+  img {
+    max-width: 70px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
