@@ -4,10 +4,12 @@ import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { withTranslation, WithTranslation } from "react-i18next";
 import Net from "../../utils/Net";
 import { HCaptchaKey } from "./../../constants";
+import { withRouter, RouteComponentProps } from "react-router-dom";
+import AuthStore, { StoreProps } from "../../undux/AuthStore";
 
 import styles from "./Auth.module.scss";
 
-interface IProps extends WithTranslation {}
+interface IProps extends WithTranslation, StoreProps, RouteComponentProps {}
 
 type IState = {
   email?: string;
@@ -43,6 +45,8 @@ class Login extends React.Component<IProps, IState> {
   };
 
   handleCapchaVerification = (captchaToken: string) => {
+    let history = this.props.history;
+    let store = this.props.store;
     if (!this.validateInputs(this.state)) return;
     this.setState({
       errorId: -1,
@@ -62,12 +66,13 @@ class Login extends React.Component<IProps, IState> {
           return;
         }
         if (e.data && e.data.success) {
+          store.set("token")(e.data.token);
           this.setState({
             email: "",
             password: "",
             showPassword: false,
           });
-          // TODO: LOGIN
+          history.push("/");
         }
       })
       .catch((e) => {
@@ -174,4 +179,4 @@ class Login extends React.Component<IProps, IState> {
   }
 }
 
-export default withTranslation()(Login);
+export default AuthStore.withStore(withRouter(withTranslation()(Login)));
