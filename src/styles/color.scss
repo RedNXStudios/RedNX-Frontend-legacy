@@ -1,0 +1,59 @@
+// -- Body --
+
+$bg-dark: #1f1e1e;
+$body-bg: #1f1e1e;
+$body-color: #999;
+
+// -- Navbar --
+$navbar-searchbar: #1a1a1a;
+
+// -- Close Button --
+$close-color: #ffffff;
+$close-text-shadow: 0 1px 0 #000000 !default;
+
+// -- Card --
+$card-bg: #282a2c;
+$card-spacer-y: 5px;
+$card-spacer-x: 5px;
+$card-border-color: rgba(#000000, 0.1);
+
+// -- Modal --
+$modal-content-bg: #1a1a1a;
+$modal-header-border-color: #1a1a1a;
+$modal-footer-border-color: #1a1a1a;
+
+// -- Input --
+$input-bg: #212224;
+$input-group-addon-bg: #212224;
+$input-border-color: #212224;
+$input-color: #e4e4e4;
+$input-disabled-bg: #242527;
+$input-disabled-border-color: #242527;
+
+$input-focus-border-color: #212224;
+$input-group-addon-color: #666;
+
+// -- Dropdown --
+$dropdown-bg: #1f1e1e;
+$dropdown-color: #ececec;
+$dropdown-border-color: #1f1e1e;
+
+$dropdown-link-color: #ececec;
+$dropdown-link-hover-color: #F8F8F8;
+$dropdown-link-hover-bg: #403D3D;
+
+$dropdown-link-active-color: #F8F8F8;
+$dropdown-link-active-bg: #484444;
+
+$dropdown-link-disabled-color: #262525;
+
+$dropdown-divider-bg: #363434;
+
+// -- Alerts --
+$alert-bg-level: 10;
+$alert-border-level: 0;
+$alert-color-level: -10;
+
+$theme-colors: (
+  "pink": #e83e8c,
+);

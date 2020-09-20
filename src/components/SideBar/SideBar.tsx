@@ -18,8 +18,9 @@ function SideBar() {
       }`}
     >
       <MainNav />
-      {authStore.get("isAuthenticated") && <hr />}
+      <hr />
       {/*authStore.get("isAuthenticated") && <FollowingNav />*/}
+      {authStore.get("isAuthenticated") && <hr />}
       <CategoryNav />
     </div>
   );

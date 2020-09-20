@@ -3,9 +3,9 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import AuthStore from "../../undux/AuthStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 
 import styles from "./NavBar.module.scss";
-import { Link } from "react-router-dom";
 
 function UserBar() {
   const { t } = useTranslation();

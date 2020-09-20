@@ -234,7 +234,7 @@ class Register extends React.Component<IProps, IState> {
               />
               <span
                 className={styles.inputFocus}
-                data-placeholder="Email"
+                data-placeholder={t("page.register.email")}
               ></span>
             </div>
             <div className={styles.inputWrap}>
@@ -267,7 +267,7 @@ class Register extends React.Component<IProps, IState> {
               />
               <span
                 className={styles.inputFocus}
-                data-placeholder="Username"
+                data-placeholder={t("page.register.username")}
               ></span>
             </div>
             <div className={styles.inputWrap}>
@@ -313,7 +313,7 @@ class Register extends React.Component<IProps, IState> {
               />
               <span
                 className={styles.inputFocus}
-                data-placeholder="Password"
+                data-placeholder={t("page.register.password")}
               ></span>
             </div>
             <div className={styles.inputWrap}>
@@ -365,15 +365,12 @@ class Register extends React.Component<IProps, IState> {
               />
               <span
                 className={styles.inputFocus}
-                data-placeholder="Confirm Password"
+                data-placeholder={t("page.register.confirmPassword")}
               ></span>
             </div>
             <div className={styles.dateContainer}>
-              <span className={styles.dateTitle}>Date of birth</span>
-              <span className={styles.dateDescription}>
-                This will not be shown publicly. Confirm your own age, even if
-                this account is for a business, a pet, or something else.
-              </span>
+              <span className={styles.dateTitle}>{t("page.register.birthDate")}</span>
+              <span className={styles.dateDescription}>{t("page.register.birthDateDescription")}</span>
               <div className="d-flex flex-wrap">
                 <div className={`${styles.dateWrap} flex-fill m-1`}>
                   <span
@@ -415,7 +412,7 @@ class Register extends React.Component<IProps, IState> {
                     className={`${styles.inputFocus} ${
                       this.validateMonth(this.state.birthMonth) && styles.ok
                     }`}
-                    data-placeholder="Month"
+                    data-placeholder={t("page.register.month")}
                   ></span>
                 </div>
                 <div className={`${styles.dateWrap} flex-fill m-1`}>
@@ -455,7 +452,7 @@ class Register extends React.Component<IProps, IState> {
                     className={`${styles.inputFocus} ${
                       this.validateDay(this.state.birthDay) && styles.ok
                     }`}
-                    data-placeholder="Day"
+                    data-placeholder={t("page.register.day")}
                   ></span>
                 </div>
                 <div className={`${styles.dateWrap} flex-fill m-1`}>
@@ -495,7 +492,7 @@ class Register extends React.Component<IProps, IState> {
                     className={`${styles.inputFocus} ${
                       this.validateYear(this.state.birthYear) && styles.ok
                     }`}
-                    data-placeholder="Year"
+                    data-placeholder={t("page.register.year")}
                   ></span>
                 </div>
               </div>

@@ -101,8 +101,8 @@ class Login extends React.Component<IProps, IState> {
               }`}
             >
               {this.state.errorId > -1 &&
-              i18n.exists("error.register." + this.state.errorId.toString())
-                ? t("error.register." + this.state.errorId.toString())
+              i18n.exists("error.login." + this.state.errorId.toString())
+                ? t("error.login." + this.state.errorId.toString())
                 : this.state.errorMessage}
             </div>
             <div className={styles.inputWrap}>
@@ -121,7 +121,7 @@ class Login extends React.Component<IProps, IState> {
               />
               <span
                 className={styles.inputFocus}
-                data-placeholder="Email"
+                data-placeholder={t("page.login.email")}
               ></span>
             </div>
             <div className={styles.inputWrap}>
@@ -153,7 +153,7 @@ class Login extends React.Component<IProps, IState> {
               />
               <span
                 className={styles.inputFocus}
-                data-placeholder="Password"
+                data-placeholder={t("page.login.password")}
               ></span>
             </div>
             <div className="text-center">
@@ -170,7 +170,7 @@ class Login extends React.Component<IProps, IState> {
               disabled={!this.validateInputs(this.state)}
               className={`btn btn-block ${styles.loginBtn}`}
             >
-              Login
+              {t("page.login.login")}
             </button>
           </form>
         </div>

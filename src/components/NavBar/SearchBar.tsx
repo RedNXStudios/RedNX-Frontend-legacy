@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SideBarStore, { StoreProps } from "../../undux/SideBarStore";
 import { withTranslation, WithTranslation } from "react-i18next";
 
+import styles from "./NavBar.module.scss";
+
 interface PropType extends StoreProps, WithTranslation {
   hasNavbarToggler: boolean;
 }
@@ -31,9 +33,10 @@ class SearchBar extends React.Component<PropType, IState> {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <form onSubmit={this.handleSubmit}>
-        <div className="search-bar input-group mx-auto form-inline">
+        <div className={`input-group mx-auto form-inline ${styles.searchBar}`}>
           {this.props.hasNavbarToggler && (
             <div className="input-group-prepend">
               <button
@@ -49,7 +52,7 @@ class SearchBar extends React.Component<PropType, IState> {
           <input
             type="text"
             className="form-control"
-            placeholder="Search"
+            placeholder={t("navbar.search")}
             aria-label="Search"
             aria-describedby="basic-addon2"
             value={this.state.searchContent}

@@ -1,4 +1,5 @@
 {
+
   "month.january": "January",
   "month.february": "February",
   "month.march": "March",
@@ -10,5 +11,40 @@
   "month.september": "September",
   "month.october": "October",
   "month.november": "November",
-  "month.december": "December"
+  "month.december": "December",
+
+  "navbar.home": "Home",
+  "navbar.discover": "Discover",
+  "navbar.search": "Search",
+  "navbar.language": "Language",
+  "navbar.darkTheme": "Dark theme",
+
+  "sidebar.hot": "Hot",
+  "sidebar.recommended": "Recommended",
+  "sidebar.live": "Live",
+  "sidebar.following": "Following",
+  "sidebar.history": "History",
+
+  "category.category": "Category",
+  "category.science": "Science",
+  "category.comedy": "Comedy",
+  "category.games": "Games",
+  "category.vlogs": "Vlogs",
+  "category.sports": "Sports",
+  "category.education": "Education",
+
+  "page.register.email": "Email",
+  "page.register.username": "Username",
+  "page.register.password": "Password",
+  "page.register.confirmPassword": "Confirm Password",
+  "page.register.birthDate": "Date of birth",
+  "page.register.birthDateDescription": "This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else.",
+  "page.register.month": "Month",
+  "page.register.day": "Day",
+  "page.register.year": "Year",
+  "page.register.register": "Register",
+
+  "page.login.email": "Email",
+  "page.login.password": "Password",
+  "page.login.login": "Login"
 }

@@ -1,3 +1,23 @@
+.navBar {
+  background-color: #1f1e1e;
+}
+
+.searchBar {
+  width: 100%;
+
+  input {
+    background-color: #242323;
+    border: 0;
+    color: #666;
+  }
+
+  button {
+    background-color: #242323;
+    color: #666;
+    border: 0;
+  }
+}
+
 .userBar {
   padding: 0 !important;
 
@@ -7,6 +27,7 @@
     }
   }
 }
+
 
 @media (min-width: 992px) {
   .animate {
@@ -50,4 +71,10 @@
 .slideIn {
   -webkit-animation-name: slideIn;
   animation-name: slideIn;
+}
+
+.dropDown {
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
 }
