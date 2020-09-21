@@ -5,7 +5,7 @@ type State = {
 };
 
 let initialState: State = {
-  show: true,
+  show: false,
 };
 
 export default createConnectedStore(initialState);

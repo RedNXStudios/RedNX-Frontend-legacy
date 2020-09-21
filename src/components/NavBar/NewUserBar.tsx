@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { useTranslation } from "react-i18next";
-import AuthStore from "../../undux/AuthStore";
+//import AuthStore from "../../undux/AuthStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
@@ -9,11 +9,11 @@ import styles from "./NavBar.module.scss";
 
 function NewUserBar() {
   const { t } = useTranslation();
-  let authStore = AuthStore.useStore();
+  //let authStore = AuthStore.useStore();
 
-  async function logout() {
+  /*async function logout() {
     authStore.set("token")(null);
-  }
+  }*/
 
   return (
     <ul className="nav navbar-nav ml-auto w-100 justify-content-end">

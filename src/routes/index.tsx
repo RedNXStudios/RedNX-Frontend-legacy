@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import AuthStore, { StoreProps } from "../undux/AuthStore";
 import SideBarStore from "../undux/SideBarStore";
 
-import OnlyPublicRoute from './OnlyPublicRoute';
+import OnlyPublicRoute from "./OnlyPublicRoute";
 
 const SideBar = React.lazy(() => import("../components/SideBar/SideBar"));
 const NavBar = React.lazy(() => import("../components/NavBar/NavBar"));
@@ -36,7 +36,9 @@ function SubRoute() {
         <SideBar />
       </SideBarStore.Container>
       <Switch>
-        <Route exact component={Home} path="/" />
+        <div className="page-content">
+          <Route exact component={Home} path="/" />
+        </div>
       </Switch>
     </div>
   );

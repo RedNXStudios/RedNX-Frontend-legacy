@@ -1,19 +1,42 @@
 import React from "react";
-class Home extends React.Component {
+import VideoFeed from "../../components/Feed/Feed";
+import Net from "../../utils/Net";
+import Loading from "../Loading/Loading";
 
-  makeid(length: number) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-       result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
- }
+interface PropsTypes {}
+
+interface IState {
+  loading: boolean;
+  videos: any[];
+}
+
+class Home extends React.Component<PropsTypes, IState> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      loading: false,
+      videos: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+    };
+  }
+
+  async componentDidMount() {
+    Net.get("/api/feed/new").then((e) => {
+      this.setState({
+        loading: false,
+        videos: e.data.videos,
+      });
+    });
+  }
 
   render() {
+    if (this.state.loading) {
+      return <Loading />;
+    }
     return (
-      <div className="home">
+      <div className="feed-list">
+        <h5>Videos</h5>
+        <hr />
+        <VideoFeed videos={this.state.videos} />
       </div>
     );
   }
