@@ -15,7 +15,7 @@ function NavLink(props: PropType) {
     exact: props.exact,
   });
   return (
-    <Link {...props} className={match ? `nav-link ${styles.navLink} ${styles.active}` : `nav-link ${styles.navLink}`}>
+    <Link to={props.to} className={match ? `nav-link ${styles.navLink} ${styles.active}` : `nav-link ${styles.navLink}`}>
       {props.children}
       <div className="nav-item-active" />
     </Link>

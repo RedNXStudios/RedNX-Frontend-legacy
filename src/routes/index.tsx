@@ -35,11 +35,11 @@ function SubRoute() {
         </AuthStore.Container>
         <SideBar />
       </SideBarStore.Container>
-      <Switch>
-        <div className="page-content">
+      <div className="page-content">
+        <Switch>
           <Route exact component={Home} path="/" />
-        </div>
-      </Switch>
+        </Switch>
+      </div>
     </div>
   );
 }

@@ -13,7 +13,7 @@ function NavLink(props: PropType) {
     exact: props.exact,
   });
   return (
-    <Link {...props} className={match ? "nav-link active" : "nav-link"}>
+    <Link to={props.to} className={match ? "nav-link active" : "nav-link"}>
       {props.children}
       <div className="nav-item-active" />
     </Link>

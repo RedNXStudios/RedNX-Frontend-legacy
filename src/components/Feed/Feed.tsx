@@ -10,8 +10,8 @@ interface IProps {
 function VideoFeed(props: IProps) {
   return (
     <div className={styles.feed}>
-      {props.videos.map((item) => (
-        <VideoThumbnail key={item.guid} data={item} />
+      {props.videos.map((item, index) => (
+        <VideoThumbnail key={index} data={item} />
       ))}
     </div>
   );

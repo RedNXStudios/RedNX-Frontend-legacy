@@ -1,4 +1,5 @@
 import { Effects, Store, createConnectedStore } from "undux";
+import { hasAuthenticationToken, getAuthenticationToken } from "../utils/LocalStorage";
 import effects from "./AuthEffects";
 
 type State = {
@@ -7,8 +8,8 @@ type State = {
 };
 
 let initialState: State = {
-  isAuthenticated: false,
-  token: null,
+  isAuthenticated: hasAuthenticationToken(),
+  token: getAuthenticationToken(),
 };
 
 export default createConnectedStore(initialState, effects);

@@ -13,11 +13,9 @@ import "./styles/global.scss";
 function App() {
   return (
     <Suspense fallback={<Loading />}>
-      <div className="content">
-        <AuthStore.Container>
-          <Routes />
-        </AuthStore.Container>
-      </div>
+      <AuthStore.Container>
+        <Routes />
+      </AuthStore.Container>
     </Suspense>
   );
 }
