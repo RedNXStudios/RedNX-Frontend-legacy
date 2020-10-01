@@ -1,0 +1,26 @@
+.dash-nav {
+  border-bottom: 1px solid #2D2D2E;
+}
+
+.dash-link {
+  display: block;
+  padding: 0.5rem 1rem;
+  text-decoration: none !important;
+  position: relative;
+  z-index: 1;
+  bottom: -1px !important;
+  color: #ececec;
+  transition: all 0.2s;
+  border-bottom: 1px solid #2D2D2E;
+
+  &.active {
+    z-index: 2 !important;
+    border-bottom: 1px solid #ff003d !important;
+    color: #ff003d !important;
+  }
+
+  &:hover {
+    color: #ececec;
+    border-bottom: 1px solid #ff2e5e !important;
+  }
+}

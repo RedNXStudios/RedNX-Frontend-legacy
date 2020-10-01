@@ -4,6 +4,7 @@ import AuthStore, { StoreProps } from "../undux/AuthStore";
 import SideBarStore from "../undux/SideBarStore";
 
 import OnlyPublicRoute from "./OnlyPublicRoute";
+import PrivateRoute from "./PrivateRoute";
 
 const SideBar = React.lazy(() => import("../components/SideBar/SideBar"));
 const NavBar = React.lazy(() => import("../components/NavBar/NavBar"));
@@ -11,6 +12,7 @@ const NavBar = React.lazy(() => import("../components/NavBar/NavBar"));
 const Home = React.lazy(() => import("../pages/Home"));
 const Login = React.lazy(() => import("../pages/Auth/Login"));
 const Register = React.lazy(() => import("../pages/Auth/Register"));
+const Dashboard = React.lazy(() => import("../pages/Dashboard"));
 
 class Routes extends React.Component<StoreProps> {
   render() {
@@ -38,6 +40,7 @@ function SubRoute() {
       <div className="page-content">
         <Switch>
           <Route exact component={Home} path="/" />
+          <PrivateRoute component={Dashboard} path="/dashboard" />
         </Switch>
       </div>
     </div>
