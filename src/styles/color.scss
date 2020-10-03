@@ -12,10 +12,10 @@ $close-color: #ffffff;
 $close-text-shadow: 0 1px 0 #000000 !default;
 
 // -- Card --
-$card-bg: #282a2c;
-$card-spacer-y: 5px;
-$card-spacer-x: 5px;
-$card-border-color: rgba(#000000, 0.1);
+$card-bg: #1c1b1b;
+$card-spacer-y: 10px;
+$card-spacer-x: 10px;
+$card-border-color: #1A1919;
 
 // -- Modal --
 $modal-content-bg: #1a1a1a;
@@ -23,14 +23,14 @@ $modal-header-border-color: #1a1a1a;
 $modal-footer-border-color: #1a1a1a;
 
 // -- Input --
-$input-bg: #212224;
-$input-group-addon-bg: #212224;
-$input-border-color: #212224;
+$input-bg: #242323;
+$input-group-addon-bg: #242323;
+$input-border-color: #242323;
 $input-color: #e4e4e4;
-$input-disabled-bg: #242527;
-$input-disabled-border-color: #242527;
+$input-disabled-bg: #2C2A2A;
+$input-disabled-border-color: #2C2A2A;
 
-$input-focus-border-color: #212224;
+$input-focus-border-color: #242323;
 $input-group-addon-color: #666;
 
 // -- Dropdown --
@@ -39,10 +39,10 @@ $dropdown-color: #ececec;
 $dropdown-border-color: #1f1e1e;
 
 $dropdown-link-color: #ececec;
-$dropdown-link-hover-color: #F8F8F8;
-$dropdown-link-hover-bg: #403D3D;
+$dropdown-link-hover-color: #f8f8f8;
+$dropdown-link-hover-bg: #403d3d;
 
-$dropdown-link-active-color: #F8F8F8;
+$dropdown-link-active-color: #f8f8f8;
 $dropdown-link-active-bg: #484444;
 
 $dropdown-link-disabled-color: #262525;

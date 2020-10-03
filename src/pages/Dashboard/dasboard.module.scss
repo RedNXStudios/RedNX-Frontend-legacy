@@ -5,8 +5,8 @@
 
   &:hover {
     img {
-      filter: brightness(50%);
-      -webkit-filter: brightness(50%);
+      filter: brightness(40%);
+      -webkit-filter: brightness(40%);
     }
     .overlay {
       .icon {
@@ -41,4 +41,17 @@
     height: auto;
     transition: 0.2s ease;
   }
+}
+
+.usernameContainer {
+  margin-left: 10px;
+  width: 100% !important;
+  max-width: 300px;
+}
+
+.card {
+  h5 {
+    margin-bottom: 10px;
+  }
+  margin-bottom: 15px;
 }

@@ -4,6 +4,7 @@ import ChannelData from "../models/ChannelData";
 type State = {
   email: string;
   username: string;
+  displayUsername: string;
   picture: string;
   channels: ChannelData[];
   selectedChannel: number;
@@ -12,6 +13,7 @@ type State = {
 let initialState: State = {
   email: "default@default.com",
   username: "default",
+  displayUsername: "Default",
   picture: "default",
   channels: [],
   selectedChannel: 0,

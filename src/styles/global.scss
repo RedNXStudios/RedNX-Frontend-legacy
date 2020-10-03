@@ -128,3 +128,27 @@ html,
 .react-datepicker-wrapper .react-datepicker__input-container {
   display: inline;
 }
+
+// Booble Error
+
+.bubble-error {
+  width: 100%;
+  font-family: Poppins-Regular;
+  color: white;
+  background: #ff003d;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+  padding: 8px;
+  border-radius: 5px;
+  visibility: hidden;
+  opacity: 0;
+  margin-bottom: 0px;
+
+  &.show {
+    visibility: visible !important;
+    opacity: 1 !important;
+    margin-bottom: 30px;
+  }
+}

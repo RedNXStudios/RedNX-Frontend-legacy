@@ -325,12 +325,12 @@ select:focus > option:checked {
   visibility: hidden;
   opacity: 0;
   margin-bottom: 0px;
-}
 
-.errorBubbleShow {
-  visibility: visible !important;
-  opacity: 1 !important;
-  margin-bottom: 30px;
+  &.errorBubbleShow {
+    visibility: visible !important;
+    opacity: 1 !important;
+    margin-bottom: 30px;
+  }
 }
 
 .modalContent {

@@ -35,7 +35,6 @@ class Home extends React.Component<PropsTypes, IState> {
     return (
       <div className="feed-list">
         <h5>Videos</h5>
-        <hr />
         <VideoFeed videos={this.state.videos} />
       </div>
     );
