@@ -1,18 +1,20 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import AuthStore, { StoreProps } from "../undux/AuthStore";
+import ProfileStore from "../undux/ProfileStore";
 import SideBarStore from "../undux/SideBarStore";
 
 import OnlyPublicRoute from "./OnlyPublicRoute";
 import PrivateRoute from "./PrivateRoute";
 
-const SideBar = React.lazy(() => import("../components/SideBar/SideBar"));
-const NavBar = React.lazy(() => import("../components/NavBar/NavBar"));
+const SideBar = React.lazy(() => import("../components/SideBar"));
+const NavBar = React.lazy(() => import("../components/NavBar"));
 
 const Home = React.lazy(() => import("../pages/Home"));
 const Login = React.lazy(() => import("../pages/Auth/Login"));
 const Register = React.lazy(() => import("../pages/Auth/Register"));
 const Dashboard = React.lazy(() => import("../pages/Dashboard"));
+const Channel = React.lazy(() => import("../pages/Channel"));
 
 class Routes extends React.Component<StoreProps> {
   render() {
@@ -31,18 +33,17 @@ class Routes extends React.Component<StoreProps> {
 function SubRoute() {
   return (
     <div className="wrapper">
-      <SideBarStore.Container>
-        <AuthStore.Container>
+      <ProfileStore.Container>
+        <SideBarStore.Container>
           <NavBar />
-        </AuthStore.Container>
-        <SideBar />
-      </SideBarStore.Container>
-      <div className="page-content">
+          <SideBar />
+        </SideBarStore.Container>
         <Switch>
           <Route exact component={Home} path="/" />
+          <Route component={Channel} path="/channel/:link" />
           <PrivateRoute component={Dashboard} path="/dashboard" />
         </Switch>
-      </div>
+      </ProfileStore.Container>
     </div>
   );
 }

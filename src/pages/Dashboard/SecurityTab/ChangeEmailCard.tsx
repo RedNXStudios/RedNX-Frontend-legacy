@@ -24,28 +24,28 @@ class ChangeEmailCard extends React.Component<IProps, IState> {
     };
   }
 
-  updateEmail = async () => {
+  updateEmail = () => {
     Net.post("/api/account/change/email", {
       email: this.state.email,
       password: this.state.password,
     })
-      .then((e) => {
-        if (e.data && e.data.error) {
+      .then((response) => {
+        if (response.data && response.data.error) {
           this.setState({
-            errorId: e.data.error.code,
-            errorMessage: e.data.error.message,
+            errorId: response.data.error.code,
+            errorMessage: response.data.error.message,
           });
           return;
         }
-        if (e.data && e.data.success) {
+        if (response.data && response.data.success) {
           //TODO: ALO
         }
       })
-      .catch((e) => {
-        if (e.response.data && e.response.data.error) {
+      .catch((reason) => {
+        if (reason.response.data && reason.response.data.error) {
           this.setState({
-            errorId: e.response.data.error.code,
-            errorMessage: e.response.data.error.message,
+            errorId: reason.response.data.error.code,
+            errorMessage: reason.response.data.error.message,
           });
           return;
         }

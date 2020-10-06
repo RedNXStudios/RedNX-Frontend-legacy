@@ -1,10 +1,11 @@
 .sideBar {
   background-color: #1C1B1B;
   width: 240px;
-  min-width: 240px;
+  //min-width: 240px;
   padding-top: 10px;
   padding-bottom: 10px;
   height: calc(100% - 56px);
+  left: 0;
   color: #d6d6d6;
   overflow: auto;
   z-index: 10;
@@ -14,8 +15,9 @@
 
 @media (max-width: 768px) {
   .hide {
-    width: 0px;
-    min-width: 0px;
+    //width: 0px;
+    //min-width: 0px;
+    left: -250px;
   }
 }
 

@@ -33,9 +33,11 @@ class Home extends React.Component<PropsTypes, IState> {
       return <Loading />;
     }
     return (
-      <div className="feed-list">
-        <h5>Videos</h5>
-        <VideoFeed videos={this.state.videos} />
+      <div className="page-content">
+        <div className="feed-list">
+          <h5>Videos</h5>
+          <VideoFeed videos={this.state.videos} />
+        </div>
       </div>
     );
   }

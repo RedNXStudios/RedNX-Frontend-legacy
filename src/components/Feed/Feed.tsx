@@ -1,5 +1,5 @@
 import React from "react";
-import VideoThumbnail from "../VideoThumbnail/VideoThumbnail";
+import VideoThumbnail from "../VideoThumbnail";
 
 import styles from "./Feed.module.scss";
 

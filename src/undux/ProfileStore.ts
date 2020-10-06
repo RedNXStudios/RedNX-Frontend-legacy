@@ -1,4 +1,4 @@
-import { Store, createConnectedStore } from "undux";
+import { Store, createConnectedStore, withReduxDevtools } from "undux";
 import ChannelData from "../models/ChannelData";
 
 type State = {
@@ -19,7 +19,7 @@ let initialState: State = {
   selectedChannel: 0,
 };
 
-export default createConnectedStore(initialState);
+export default createConnectedStore(initialState, withReduxDevtools);
 
 export type StoreProps = {
   store: Store<State>;

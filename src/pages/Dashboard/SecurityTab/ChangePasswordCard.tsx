@@ -25,7 +25,7 @@ class ChangePasswordCard extends React.Component<IProps, IState> {
     };
   }
 
-  updatePassword = async () => {
+  updatePassword = () => {
     Net.post("/api/account/change/email", {
       currentPassword: this.state.currentPassword,
       newPassword: this.state.newPassword,

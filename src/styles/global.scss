@@ -30,6 +30,21 @@ html,
   }
 }
 
+.page-content-np {
+  width: calc(100% - 240px);
+  margin-left: 240px;
+  transition: all 0.3s;
+  height: calc(100% - 56px);
+  min-width: 240px;
+
+  @media (max-width: 768px) {
+    & {
+      width: 100% !important;
+      margin-left: 0 !important;
+    }
+  }
+}
+
 .center-page-content {
   position: absolute;
   top: 50%;
