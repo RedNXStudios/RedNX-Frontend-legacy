@@ -1,5 +1,5 @@
 import React from "react";
-import VideoFeed from "../../components/Feed/Feed";
+import VideoFeed from "../../components/Feed/VideoFeed";
 import Net from "../../utils/Net";
 import Loading from "../Loading/Loading";
 

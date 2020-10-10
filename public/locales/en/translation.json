@@ -64,6 +64,8 @@
 
   "channel.follower": "{{countText}} follower",
   "channel.follower_plural": "{{countText}} followers",
+  "channel.follow": "Follow",
+  "channel.following": "Following",
 
   "page.register.email": "Email",
   "page.register.username": "Username",

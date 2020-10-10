@@ -41,7 +41,7 @@ function Dashboard() {
             Privacy
           </a>
         </nav>
-        <div id="myTabContent" className="tab-content">
+        <div className="tab-content">
           <ProfileStore.Container>
             <ProfileTab />
             <SecurityTab />

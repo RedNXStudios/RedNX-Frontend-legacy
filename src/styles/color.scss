@@ -15,7 +15,7 @@ $close-text-shadow: 0 1px 0 #000000 !default;
 $card-bg: #1c1b1b;
 $card-spacer-y: 10px;
 $card-spacer-x: 10px;
-$card-border-color: #1A1919;
+$card-border-color: #1a1919;
 
 // -- Modal --
 $modal-content-bg: #1a1a1a;
@@ -27,8 +27,8 @@ $input-bg: #242323;
 $input-group-addon-bg: #242323;
 $input-border-color: #242323;
 $input-color: #e4e4e4;
-$input-disabled-bg: #2C2A2A;
-$input-disabled-border-color: #2C2A2A;
+$input-disabled-bg: #2c2a2a;
+$input-disabled-border-color: #2c2a2a;
 
 $input-focus-border-color: #242323;
 $input-group-addon-color: #666;
@@ -54,6 +54,17 @@ $alert-bg-level: 10;
 $alert-border-level: 0;
 $alert-color-level: -10;
 
+$red: #ff003d;
+$pink: #e83e8c;
+
 $theme-colors: (
-  "pink": #e83e8c,
+  "pink": $pink,
+  "red":  $red,
 );
+
+$colors: (
+  "pink": $pink,
+  "red":  $red,
+);
+
+$danger: $red;

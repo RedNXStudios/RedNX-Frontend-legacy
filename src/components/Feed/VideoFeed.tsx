@@ -11,7 +11,7 @@ function VideoFeed(props: IProps) {
   return (
     <div className={styles.feed}>
       {props.videos.map((item, index) => (
-        <VideoThumbnail key={index} data={item} />
+        <VideoThumbnail key={index} data={item} channelVideo={false} />
       ))}
     </div>
   );

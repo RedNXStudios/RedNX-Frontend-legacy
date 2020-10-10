@@ -1,125 +1,155 @@
 /* eslint-disable jsx-a11y/role-supports-aria-props */
-import React from "react";
-import VideoFeed from "../../components/Feed/Feed";
-import ChannelStore, { StoreProps } from "../../undux/ChannelStore";
+import React, { useEffect } from "react";
+import ChannelFeed from "../../components/Feed/ChannelFeed";
+import ChannelStore from "../../undux/ChannelStore";
+import AuthStore from "../../undux/AuthStore";
 import Net from "../../utils/Net";
 import { numberToText } from "../../utils/Conversion";
-import { withRouter, RouteComponentProps } from "react-router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useHistory, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import styles from "./Channel.module.scss";
-import { withTranslation, WithTranslation } from "react-i18next";
 
 interface PathParamsType {
   link: string;
 }
+function Channel(props: any) {
+  let channelStore = ChannelStore.useStore();
+  let authStore = AuthStore.useStore();
+  let history = useHistory();
+  let params: PathParamsType = useParams();
+  let { t } = useTranslation();
 
-interface IProps
-  extends StoreProps,
-    RouteComponentProps<PathParamsType>,
-    WithTranslation {}
-
-class Channel extends React.Component<IProps> {
-  constructor(props: IProps) {
-    super(props);
-    this.state = {};
-  }
-
-  componentDidMount = () => {
-    let storeLink = this.props.store.get("link");
-    if (this.props.match.params.link !== storeLink) {
-      Net.post("/api/channels/get", { link: this.props.match.params.link })
+  useEffect(() => {
+    if (params.link !== channelStore.get("link")) {
+      Net.post("/api/channels/get", { link: params.link })
         .then((e) => {
           if (e.data && e.data.error) {
-            this.props.history.push("/");
+            history.push("/");
             return;
           }
           if (e.data && e.data.channel) {
-            this.props.store.set("id")(e.data.channel.id);
-            this.props.store.set("link")(e.data.channel.link);
-            this.props.store.set("name")(e.data.channel.name);
-            this.props.store.set("picture")(e.data.channel.picture);
-            this.props.store.set("followers")(e.data.channel.followers);
+            channelStore.set("guid")(e.data.channel.guid);
+            channelStore.set("link")(e.data.channel.link);
+            channelStore.set("name")(e.data.channel.name);
+            channelStore.set("description")(e.data.channel.description);
+            channelStore.set("picture")(e.data.channel.picture);
+            channelStore.set("followers")(e.data.channel.followers);
           }
         })
         .catch((e) => {
-          this.props.history.push("/");
+          history.push("/");
         });
     }
-  };
+  });
 
-  render() {
-    let { t } = this.props;
-    return (
-      <div className="page-content-np">
-        <div className={styles.banner}></div>
-        <div className={styles.channelBar}>
-          <div className={styles.leftBox}>
-            <div className={styles.channelPicture}>
-              <img
-                src={`http://s3.tryhosting.com.br/picture/channel/${this.props.store.get(
-                  "picture"
-                )}`}
-                alt="Channel"
-              />
-            </div>
-            <div className={styles.channelInfo}>
-              <span className={styles.name}>
-                {this.props.store.get("name")}
-              </span>
-              <span className={styles.followers}>
-                {t("channel.follower", {
-                  count: this.props.store.get("followers"),
-                  countText: numberToText(this.props.store.get("followers"), t),
-                })}
-              </span>
-            </div>
+  function followChannel() {
+    if(authStore.get("isAuthenticated")) {
+      const isFollowing = !channelStore.get("following");
+      Net.post("/api/channels/follow", { channelGuid: channelStore.get("guid"), isFollowing })
+        .then((e) => {
+          if (e.data && e.data.error) {
+            alert(e.data.error.message);
+            return;
+          }
+          if (e.data && e.data.success) {
+            channelStore.set("following")(isFollowing);
+          }
+        })
+        .catch((e) => {
+          if (e.data && e.data.error) {
+            alert(e.data.error.message);
+            return;
+          }
+        });
+    } else {
+      history.push("/login");
+    }
+  }
+
+  return (
+    <div className="page-content-np">
+      <div className={styles.banner}></div>
+      <div className={styles.channelBar}>
+        <div className={styles.leftBox}>
+          <div className={styles.channelPicture}>
+            <img
+              src={`http://s3.tryhosting.com.br/picture/channel/${channelStore.get(
+                "picture"
+              )}`}
+              alt="Channel"
+            />
           </div>
-          <div className={styles.rightBox}>
-            <div className={styles.channelButtons}>
-              <button type="button" className="btn btn-danger mx-1">
-                Follow
-              </button>
-            </div>
+          <div className={styles.channelInfo}>
+            <span className={styles.name}>{channelStore.get("name")}</span>
+            <span className={styles.followers}>
+              {t("channel.follower", {
+                count: channelStore.get("followers"),
+                countText: numberToText(channelStore.get("followers"), t),
+              })}
+            </span>
           </div>
         </div>
-        <div className={styles.content}>
-          <nav className="nav dash-nav mb-2">
-            <a
-              className="dash-link active"
-              data-toggle="tab"
-              aria-controls="profile"
-              aria-selected="true"
-              href="#profile"
+        <div className={styles.rightBox}>
+          <div className={styles.channelButtons}>
+            <button
+              type="button"
+              className={`btn mx-1 ${
+                channelStore.get("following")
+                  ? "btn-danger"
+                  : "btn-outline-danger"
+              }`}
+              onClick={followChannel}
             >
-              Home
-            </a>
-            <a
-              className="dash-link"
-              data-toggle="tab"
-              aria-controls="security"
-              aria-selected="false"
-              href="#security"
-            >
-              Videos
-            </a>
-            <a
-              className="dash-link"
-              data-toggle="tab"
-              aria-controls="privacy"
-              aria-selected="false"
-              href="#privacy"
-            >
-              About
-            </a>
-          </nav>
-          <div className="feed-list">
-            <h5>Videos</h5>
-            <VideoFeed videos={[{}, {}, {}, {}, {}, {}, {}, {}]} />
+              <FontAwesomeIcon
+                icon={
+                  channelStore.get("following")
+                    ? ["fas", "heart"]
+                    : ["far", "heart"]
+                }
+                className={styles.icon}
+              />
+              &nbsp;
+              {channelStore.get("following") ? t("channel.following") : t("channel.follow")}
+            </button>
           </div>
         </div>
       </div>
-    );
-  }
+      <div className={styles.content}>
+        <nav className="nav dash-nav mb-2">
+          <a
+            className="dash-link active"
+            data-toggle="tab"
+            aria-controls="security"
+            aria-selected="true"
+            href="#videos"
+          >
+            Videos
+          </a>
+          <a
+            className="dash-link"
+            data-toggle="tab"
+            aria-controls="privacy"
+            aria-selected="false"
+            href="#about"
+          >
+            About
+          </a>
+        </nav>
+        <div className="tab-content">
+          <div className="tab-pane fade show active" id="videos">
+            <div className="feed-list">
+              <ChannelFeed videos={[{}, {}, {}, {}, {}, {}, {}, {}]} />
+            </div>
+          </div>
+          <div className="tab-pane fade show" id="about">
+            {channelStore.get("description")}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default ChannelStore.withStore(withRouter(withTranslation()(Channel)));
+export default Channel;

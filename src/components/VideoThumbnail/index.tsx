@@ -12,10 +12,12 @@ import styles from "./VideoThumbnail.module.scss";
 
 interface PropType {
   data?: any;
+  channelVideo: boolean;
 }
 
 function VideoThumbnail(props: PropType) {
   let { t } = useTranslation();
+
   return (
     <div className={styles.videoThumbnail}>
       <div className={styles.content}>
@@ -66,20 +68,22 @@ function VideoThumbnail(props: PropType) {
           )}
         </div>
         <div className={styles.videoInfo}>
-          <div
-            className={`${styles.channelImage} ${
-              props.data.thumb == null && styles.loadingAnimated
-            }`}
-          >
-            {props.data.channel && (
-              <Link to={`/channel/${props.data.channel.link}`}>
-                <img
-                  src={`http://s3.tryhosting.com.br/picture/channel/${props.data.channel.picture}`}
-                  alt="Avatar do Canal"
-                />
-              </Link>
-            )}
-          </div>
+          {!props.channelVideo && (
+            <div
+              className={`${styles.channelImage} ${
+                props.data.thumb == null && styles.loadingAnimated
+              }`}
+            >
+              {props.data.channel && (
+                <Link to={`/channel/${props.data.channel.link}`}>
+                  <img
+                    src={`http://s3.tryhosting.com.br/picture/channel/${props.data.channel.picture}`}
+                    alt="Avatar do Canal"
+                  />
+                </Link>
+              )}
+            </div>
+          )}
           <div
             className={`${styles.videoFooter} ${
               props.data.thumb == null && styles.loadingAnimated
@@ -92,15 +96,17 @@ function VideoThumbnail(props: PropType) {
                 </Link>
               )}
             </div>
-            <div className={styles.channelName}>
-              {props.data.channel && (
-                <Link to={`/channel/${props.data.channel.link}`}>
-                  <h5 className={styles.linkLimit}>
-                    {props.data.channel.name}
-                  </h5>
-                </Link>
-              )}
-            </div>
+            {!props.channelVideo && (
+              <div className={styles.channelName}>
+                {props.data.channel && (
+                  <Link to={`/channel/${props.data.channel.link}`}>
+                    <h5 className={styles.linkLimit}>
+                      {props.data.channel.name}
+                    </h5>
+                  </Link>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
