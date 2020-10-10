@@ -106,16 +106,16 @@ class UploadProfilePicture extends React.Component<IProps, IState> {
           } else this.setState({ uploading: false });
         })
         .catch((e) => {
-          console.info(e);
-          this.setState({ uploading: false });
-          /*if (e && e.response.data && e.response.data.error) {
+          //console.info(e);
+          //this.setState({ uploading: false });
+          if (e && e.response.data && e.response.data.error) {
             this.setState({
               errorId: e.response.data.error.code,
               errorMessage: e.response.data.error.message,
               uploading: false,
             });
             return;
-          } else this.setState({ uploading: false });*/
+          } else this.setState({ uploading: false });
         });
       /*try {
           this.setState({ uploading: true });

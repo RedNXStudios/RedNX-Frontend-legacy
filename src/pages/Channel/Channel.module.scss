@@ -12,31 +12,116 @@
   padding: 0 20px 0 20px;
 
   hr {
-    border-top: 3px solid #2C2A2A;
-  }
-}
-
-.channelPicture {
-  border: 5px solid #1f1e1e;
-  border-radius: 50%;
-  width: 110px;
-  height: 110px;
-  margin-top: -20px;
-  margin-right: 10px;
-
-  img {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
+    border-top: 3px solid #2c2a2a;
   }
 }
 
 .channelBar {
   display: flex;
+  justify-content: space-between;
+  -ms-flex-pack: justify;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+
   padding: 0 20px 0 20px;
   background-color: #1f1e1e;
-}
 
-.channelName {
-  margin-top: 5px;
+  .leftBox {
+    display: flex;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+
+    .channelPicture {
+      border: 5px solid #1f1e1e;
+      border-radius: 50%;
+      width: 110px;
+      height: 110px;
+      margin-top: -20px;
+      margin-right: 10px;
+      transition: all 0.3s;
+
+      img {
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        transition: all 0.3s;
+      }
+    }
+
+    .channelInfo {
+      margin-top: 5px;
+
+      .name {
+        display: inline-block;
+        width: 100%;
+        word-break: break-word;
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        line-height: 1.2;
+        font-size: 1.5rem;
+      }
+
+      .followers {
+        display: inline-block;
+        width: 100%;
+        word-break: break-word;
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        line-height: 1.2;
+        font-size: 1.0rem;
+      }
+    }
+  }
+
+  .rightBox {
+    display: flex;
+    flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    justify-content: flex-end;
+    -ms-flex-pack: end;
+
+    .channelButtons {
+      margin-top: 25px;
+    }
+  }
+
+  @media (max-width: 968px) {
+    & {
+      -ms-flex-direction: column;
+      flex-direction: column;
+
+      .leftBox {
+        .channelPicture {
+          width: 90px;
+          height: 90px;
+          img {
+            width: 80px;
+            height: 80px;
+          }
+        }
+        .channelInfo {
+          .name {
+            font-size: 1.25rem;
+            margin-bottom: 0.10rem;
+          }
+
+          .followers {
+            font-size: 0.75rem;
+            margin-bottom: 0.10rem;
+          }
+        }
+      }
+
+      .rightBox {
+        -ms-flex-pack: center;
+        justify-content: center;
+
+        .channelButtons {
+          margin-top: 5px;
+        }
+      }
+    }
+  }
 }

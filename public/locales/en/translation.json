@@ -62,6 +62,9 @@
   "thumbnail.view": "{{countText}} view",
   "thumbnail.view_plural": "{{countText}} views",
 
+  "channel.follower": "{{countText}} follower",
+  "channel.follower_plural": "{{countText}} followers",
+
   "page.register.email": "Email",
   "page.register.username": "Username",
   "page.register.password": "Password",

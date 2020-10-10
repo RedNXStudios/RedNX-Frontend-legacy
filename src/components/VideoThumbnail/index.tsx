@@ -31,7 +31,7 @@ function VideoThumbnail(props: PropType) {
             >
               <div className={styles.thumbnailContainer}>
                 <img
-                  src={`http://s3.tryhosting.com.br/pp/${props.data.thumb}.webp`}
+                  src={`http://s3.tryhosting.com.br/video/thumbnail/${props.data.thumb}`}
                   alt="Video thumbnail"
                   className={styles.thumbnailImage}
                 />
@@ -74,7 +74,7 @@ function VideoThumbnail(props: PropType) {
             {props.data.channel && (
               <Link to={`/channel/${props.data.channel.link}`}>
                 <img
-                  src={`http://s3.tryhosting.com.br/pp/${props.data.channel.picture}.webp`}
+                  src={`http://s3.tryhosting.com.br/picture/channel/${props.data.channel.picture}`}
                   alt="Avatar do Canal"
                 />
               </Link>

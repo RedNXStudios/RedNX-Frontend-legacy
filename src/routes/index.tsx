@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import AuthStore, { StoreProps } from "../undux/AuthStore";
+import ChannelStore from "../undux/ChannelStore";
 import ProfileStore from "../undux/ProfileStore";
 import SideBarStore from "../undux/SideBarStore";
 
@@ -34,15 +35,17 @@ function SubRoute() {
   return (
     <div className="wrapper">
       <ProfileStore.Container>
-        <SideBarStore.Container>
-          <NavBar />
-          <SideBar />
-        </SideBarStore.Container>
-        <Switch>
-          <Route exact component={Home} path="/" />
-          <Route component={Channel} path="/channel/:link" />
-          <PrivateRoute component={Dashboard} path="/dashboard" />
-        </Switch>
+        <ChannelStore.Container>
+          <SideBarStore.Container>
+            <NavBar />
+            <SideBar />
+          </SideBarStore.Container>
+          <Switch>
+            <Route exact component={Home} path="/" />
+            <Route component={Channel} path="/channel/:link" />
+            <PrivateRoute component={Dashboard} path="/dashboard" />
+          </Switch>
+        </ChannelStore.Container>
       </ProfileStore.Container>
     </div>
   );

@@ -1,11 +1,11 @@
 import axios from "axios";
 import { getAuthenticationToken, deleteAuthenticationToken } from "./LocalStorage";
 
-const net = axios.create(/*{
+const Net = axios.create(/*{
   baseURL: "http://localhost:8080",
 }*/);
 
-net.interceptors.request.use(async (config) => {
+Net.interceptors.request.use(async (config) => {
   const token = getAuthenticationToken();
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -13,7 +13,7 @@ net.interceptors.request.use(async (config) => {
   return config;
 });
 
-net.interceptors.response.use(
+Net.interceptors.response.use(
   (e) => e,
   (e) => {
     if (
@@ -29,4 +29,4 @@ net.interceptors.response.use(
   }
 );
 
-export default net;
+export default Net;
