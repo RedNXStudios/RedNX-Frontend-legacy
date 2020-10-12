@@ -9,7 +9,7 @@ interface IProps {
 
 function ChannelFeed(props: IProps) {
   return (
-    <div className={styles.feed}>
+    <div className={styles.horizontalFeed}>
       {props.videos.map((item, index) => (
         <VideoThumbnail key={index} data={item} channelVideo={true} />
       ))}

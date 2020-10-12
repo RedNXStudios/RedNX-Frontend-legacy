@@ -10,12 +10,14 @@ import { useHistory, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import styles from "./Channel.module.scss";
+import FeedStore from "../../undux/FeedStore";
 
 interface PathParamsType {
   link: string;
 }
 function Channel(props: any) {
   let channelStore = ChannelStore.useStore();
+  let feedStore = FeedStore.useStore();
   let authStore = AuthStore.useStore();
   let history = useHistory();
   let params: PathParamsType = useParams();
@@ -30,24 +32,43 @@ function Channel(props: any) {
             return;
           }
           if (e.data && e.data.channel) {
+            channelStore.set("id")(e.data.channel.id);
             channelStore.set("guid")(e.data.channel.guid);
             channelStore.set("link")(e.data.channel.link);
             channelStore.set("name")(e.data.channel.name);
             channelStore.set("description")(e.data.channel.description);
             channelStore.set("picture")(e.data.channel.picture);
             channelStore.set("followers")(e.data.channel.followers);
+            channelStore.set("following")(e.data.channel.following);
+            getVideos();
           }
         })
         .catch((e) => {
           history.push("/");
         });
-    }
+    } else getVideos();
   });
 
+  function getVideos() {
+    Net.post("/api/channel/video/get", { id: channelStore.get("id") })
+      .then((e) => {
+        if (e.data && e.data.error) {
+          alert(e.data.error);
+          return;
+        }
+        if (e.data && e.data.videos) {
+          feedStore.set("channelFeed")(e.data.videos);
+        }
+      });
+  }
+
   function followChannel() {
-    if(authStore.get("isAuthenticated")) {
+    if (authStore.get("isAuthenticated")) {
       const isFollowing = !channelStore.get("following");
-      Net.post("/api/channels/follow", { channelGuid: channelStore.get("guid"), isFollowing })
+      Net.post("/api/channels/follow", {
+        channelGuid: channelStore.get("guid"),
+        isFollowing,
+      })
         .then((e) => {
           if (e.data && e.data.error) {
             alert(e.data.error.message);
@@ -111,7 +132,9 @@ function Channel(props: any) {
                 className={styles.icon}
               />
               &nbsp;
-              {channelStore.get("following") ? t("channel.following") : t("channel.follow")}
+              {channelStore.get("following")
+                ? t("channel.following")
+                : t("channel.follow")}
             </button>
           </div>
         </div>
@@ -140,7 +163,7 @@ function Channel(props: any) {
         <div className="tab-content">
           <div className="tab-pane fade show active" id="videos">
             <div className="feed-list">
-              <ChannelFeed videos={[{}, {}, {}, {}, {}, {}, {}, {}]} />
+              <ChannelFeed videos={feedStore.get("channelFeed")} />
             </div>
           </div>
           <div className="tab-pane fade show" id="about">

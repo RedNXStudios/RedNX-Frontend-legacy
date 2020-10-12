@@ -1,5 +1,14 @@
-.feed {
+.horizontalFeed {
+  display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+}
+
+.verticalFeed {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
 }

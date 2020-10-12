@@ -2,8 +2,10 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import AuthStore, { StoreProps } from "../undux/AuthStore";
 import ChannelStore from "../undux/ChannelStore";
+import FeedStore from "../undux/FeedStore";
 import ProfileStore from "../undux/ProfileStore";
 import SideBarStore from "../undux/SideBarStore";
+import WatchStore from "../undux/WatchStore";
 
 import OnlyPublicRoute from "./OnlyPublicRoute";
 import PrivateRoute from "./PrivateRoute";
@@ -16,6 +18,7 @@ const Login = React.lazy(() => import("../pages/Auth/Login"));
 const Register = React.lazy(() => import("../pages/Auth/Register"));
 const Dashboard = React.lazy(() => import("../pages/Dashboard"));
 const Channel = React.lazy(() => import("../pages/Channel"));
+const Watch = React.lazy(() => import("../pages/Watch"));
 
 class Routes extends React.Component<StoreProps> {
   render() {
@@ -36,15 +39,20 @@ function SubRoute() {
     <div className="wrapper">
       <ProfileStore.Container>
         <ChannelStore.Container>
-          <SideBarStore.Container>
-            <NavBar />
-            <SideBar />
-          </SideBarStore.Container>
-          <Switch>
-            <Route exact component={Home} path="/" />
-            <Route component={Channel} path="/channel/:link" />
-            <PrivateRoute component={Dashboard} path="/dashboard" />
-          </Switch>
+          <WatchStore.Container>
+            <FeedStore.Container>
+              <SideBarStore.Container>
+                <NavBar />
+                <SideBar />
+              </SideBarStore.Container>
+              <Switch>
+                <Route exact component={Home} path="/" />
+                <Route component={Channel} path="/channel/:link" />
+                <Route component={Watch} path="/watch/:guid" />
+                <PrivateRoute component={Dashboard} path="/dashboard" />
+              </Switch>
+            </FeedStore.Container>
+          </WatchStore.Container>
         </ChannelStore.Container>
       </ProfileStore.Container>
     </div>

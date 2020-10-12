@@ -1,6 +1,7 @@
 import { Store, createConnectedStore, withReduxDevtools } from "undux";
 
 type State = {
+  id: string;
   guid: string;
   link: string;
   name: string;
@@ -11,6 +12,7 @@ type State = {
 };
 
 let initialState: State = {
+  id: "0",
   guid: "default",
   link: "default",
   name: "Default",

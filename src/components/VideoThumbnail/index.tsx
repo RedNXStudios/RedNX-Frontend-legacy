@@ -90,7 +90,7 @@ function VideoThumbnail(props: PropType) {
             }`}
           >
             <div className={styles.videoTitle}>
-              {props.data.channel && (
+              {props.data && (
                 <Link to={`/watch/${props.data.guid}`}>
                   <h5 className={styles.linkLimit}>{props.data.title}</h5>
                 </Link>

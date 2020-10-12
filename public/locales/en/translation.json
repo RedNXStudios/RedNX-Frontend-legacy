@@ -67,6 +67,9 @@
   "channel.follow": "Follow",
   "channel.following": "Following",
 
+  "watch.like": "Like",
+  "watch.dislike": "Dislike",
+
   "page.register.email": "Email",
   "page.register.username": "Username",
   "page.register.password": "Password",
@@ -88,5 +91,9 @@
   "page.dashboard.currentPassword": "Current password",
   "page.dashboard.newPassword": "New password",
   "page.dashboard.confirmNewPassword": "Confirm new password",
-  "page.dashboard.save": "Save"
+  "page.dashboard.save": "Save",
+
+  "page.watch.hideDescription": "Hide Description",
+  "page.watch.showDescription": "Show Description",
+  "page.watch.share": "Share"
 }
