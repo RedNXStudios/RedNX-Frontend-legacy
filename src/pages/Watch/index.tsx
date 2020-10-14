@@ -15,6 +15,7 @@ import Player from "../../components/Player";
 import WatchFeed from "../../components/Feed/WatchFeed";
 import TitleBar from "../../components/Watch/TitleBar";
 import DescriptionContainer from "../../components/Watch/DescriptionContainer";
+import SideBarStore from "../../undux/SideBarStore";
 
 interface PathParamsType {
   guid: string;
@@ -24,6 +25,7 @@ function Watch(props: any) {
   let channelStore = ChannelStore.useStore();
   let feedStore = FeedStore.useStore();
   let authStore = AuthStore.useStore();
+  let sideBarStore = SideBarStore.useStore();
   let history = useHistory();
   let params: PathParamsType = useParams();
   let { t } = useTranslation();
@@ -48,6 +50,8 @@ function Watch(props: any) {
           watchStore.set("views")(e.data.video.views);
           watchStore.set("likes")(e.data.video.likes);
           watchStore.set("dislikes")(e.data.video.dislikes);
+          watchStore.set("liked")(e.data.video.liked);
+          watchStore.set("disliked")(e.data.video.disliked);
           watchStore.set("creationDate")(e.data.video.creationDate);
           if (e.data.video.channel) {
             channelStore.set("id")(e.data.video.channel.id);
@@ -92,15 +96,15 @@ function Watch(props: any) {
   }
 
   return (
-    <div className={styles.pageContent}>
-      <div className={`${styles.container} row`}>
+    <div className={`${styles.pageContent} ${!sideBarStore.get("show") && styles.removeMargin}`}>
+      <div className={`${styles.container} row no-gutters`}>
         <div className="col-sm-12 col-md-12 col-lg-12 col-xl-9">
           <Player />
           <TitleBar />
           <DescriptionContainer />
         </div>
         <div className="col-sm-12 col-md-12 col-lg-12 col-xl-3">
-          <WatchFeed videos={[{}, {}, {}, {}, {}, {}, {}, {}]} />
+          <WatchFeed />
         </div>
       </div>
     </div>

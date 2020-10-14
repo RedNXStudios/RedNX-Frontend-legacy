@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, matchPath, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import ProfileStore from "../../undux/ProfileStore";
 import NavLink from "./NavLink";
@@ -7,13 +7,36 @@ import SearchBar from "./SearchBar";
 import NewUserBar from "./NewUserBar";
 
 import styles from "./NavBar.module.scss";
+import SideBarStore from "../../undux/SideBarStore";
 
 function NavBar() {
+  let sideBarStore = SideBarStore.useStore();
+  let location = useLocation();
   let { t } = useTranslation();
+  let matchWatch = matchPath(location.pathname, {
+    path: "/watch/:guid",
+    exact: true,
+    strict: false,
+  });
+
+  function toggleSideBar() {
+    sideBarStore.set("show")(!sideBarStore.get("show"));
+  }
+
   return (
     <nav
       className={`navbar navbar-dark navbar-expand-md justify-content-center fixed-top ${styles.navBar}`}
     >
+      {matchWatch && (
+        <button
+          className="btn btn-sm mr-2 hidden-md"
+          type="button"
+          aria-label="Toggle navigation"
+          onClick={toggleSideBar}
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+      )}
       <Link to="/" className="navbar-brand visible-md">
         <img
           src="/images/logo-dark.svg"

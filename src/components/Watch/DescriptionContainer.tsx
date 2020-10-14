@@ -8,6 +8,7 @@ import WatchStore from "../../undux/WatchStore";
 
 import styles from "./Watch.module.scss";
 import ChannelStore from "../../undux/ChannelStore";
+import Net from "../../utils/Net";
 
 function DescriptionContainer(props: any) {
   const [showDescription, setShowDescription] = useState(false);
@@ -40,7 +41,7 @@ function DescriptionContainer(props: any) {
     }*/
   }
 
-  function toggleDescription(e: any) {
+  function toggleDescription(e: React.MouseEvent) {
     e.preventDefault();
     if (showDescription) {
       setShowDescription(false);
@@ -49,56 +50,29 @@ function DescriptionContainer(props: any) {
     }
   }
 
-  function likeVideo(e: any) {
+  function likeVideo(e: React.MouseEvent, isLike: boolean | null) {
     e.preventDefault();
-    /*if (!this.props.auth.get("isLogged")) return;
-    const { video, like } = this.state;
-    if (video === undefined || video === null) return;
-    if (like) {
-      this.setState({
-        like: false,
-        dislike: false,
-      });
-      await net.post("/video/like", {
-        id: video.id,
-        value: null,
-      });
-    } else {
-      this.setState({
-        like: true,
-        dislike: false,
-      });
-      await net.post("/video/like", {
-        id: video.id,
-        value: true,
-      });
-    }*/
-  }
-
-  function dislikeVideo(e: any) {
-    e.preventDefault();
-    /*if (!this.props.auth.get("isLogged")) return;
-    const { video, dislike } = this.state;
-    if (video === undefined || video === null) return;
-    if (dislike) {
-      this.setState({
-        like: false,
-        dislike: false,
-      });
-      await net.post("/video/like", {
-        id: video.id,
-        value: null,
-      });
-    } else {
-      this.setState({
-        like: false,
-        dislike: true,
-      });
-      await net.post("/video/like", {
-        id: video.id,
-        value: false,
-      });
-    }*/
+    if (!authStore.get("isAuthenticated")) return;
+    Net.post("/api/video/like", { id: watchStore.get("id"), isLike }).then(
+      (e) => {
+        if (e.data && e.data.error) {
+          alert("Failed to like");
+          return;
+        }
+        if (e.data && e.data.success) {
+          if (isLike == null) {
+            watchStore.set("liked")(false);
+            watchStore.set("disliked")(false);
+          } else if (isLike == true) {
+            watchStore.set("liked")(true);
+            watchStore.set("disliked")(false);
+          } else {
+            watchStore.set("liked")(false);
+            watchStore.set("disliked")(true);
+          }
+        }
+      }
+    );
   }
 
   return (
@@ -133,16 +107,24 @@ function DescriptionContainer(props: any) {
           <div className={`${styles.mobileBox} ${styles.topMobileBox}`}>
             <button
               type="button"
-              className={`btn btn-sm ${true ? "btn-danger" : ""}`}
-              onClick={likeVideo}
+              className={`btn btn-sm ${
+                watchStore.get("liked") ? "btn-danger" : ""
+              }`}
+              onClick={(e) =>
+                likeVideo(e, watchStore.get("liked") ? null : true)
+              }
             >
               <FontAwesomeIcon icon="thumbs-up" className={styles.icon} />
               &nbsp;&nbsp; {t("watch.like")}
             </button>
             <button
               type="button"
-              className={`btn btn-sm ${false ? "btn-danger" : ""}`}
-              onClick={dislikeVideo}
+              className={`btn btn-sm ${
+                watchStore.get("disliked") ? "btn-danger" : ""
+              }`}
+              onClick={(e) =>
+                likeVideo(e, watchStore.get("disliked") ? null : false)
+              }
             >
               <FontAwesomeIcon icon="thumbs-down" className={styles.icon} />
               &nbsp;&nbsp; {t("watch.dislike")}
@@ -164,10 +146,10 @@ function DescriptionContainer(props: any) {
             </button>
             <button
               type="button"
-              className={`btn btn-sm btn-danger ${
+              className={`btn btn-sm ${
                 channelStore.get("following")
-                  ? "btn-primary"
-                  : "btn-outline-primary"
+                  ? "btn-danger"
+                  : "btn-outline-danger"
               }`}
               onClick={followChannel}
             >

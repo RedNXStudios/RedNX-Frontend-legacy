@@ -5,7 +5,7 @@ type State = {
 };
 
 let initialState: State = {
-  show: false,
+  show: true,
 };
 
 export default createConnectedStore(initialState, withReduxDevtools);

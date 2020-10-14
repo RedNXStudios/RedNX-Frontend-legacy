@@ -1,5 +1,8 @@
 @import "./bootstrap.scss";
 @import "./custom/dashnav.scss";
+@import "./custom/scrollbar.scss";
+@import "./custom/booble.scss";
+@import "./custom/plyr.scss";
 
 body,
 html,
@@ -83,22 +86,6 @@ html,
   }
 }
 
-// Scroll Bar
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  border-radius: 1px;
-}
-
-::-webkit-scrollbar-thumb {
-  box-shadow: inset 0 0 10px 10px rgba(255, 255, 255, 0.15);
-  border: solid 2px transparent;
-  border-radius: 5px;
-}
-
 // Pages
 
 .feed-list {
@@ -111,55 +98,5 @@ html,
 
   h5 {
     margin-bottom: 2px;
-  }
-}
-
-// Player
-
-.plyr {
-  width: 100% !important;
-  height: auto !important;
-  border-radius: 5px 5px 0px 0px;
-}
-
-// Register
-
-.react-datepicker-wrapper {
-  display: block !important;
-  width: 100% !important;
-}
-
-.react-datepicker-popper {
-  z-index: 2;
-  top: 34px !important;
-  /* needed because we made it inline */
-}
-
-.react-datepicker-wrapper,
-.react-datepicker-wrapper .react-datepicker__input-container {
-  display: inline;
-}
-
-// Booble Error
-
-.bubble-error {
-  width: 100%;
-  font-family: Poppins-Regular;
-  color: white;
-  background: #ff003d;
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-  transition: all 0.4s;
-  padding: 8px;
-  border-radius: 5px;
-  visibility: hidden;
-  opacity: 0;
-  margin-bottom: 0px;
-
-  &.show {
-    visibility: visible !important;
-    opacity: 1 !important;
-    margin-bottom: 30px;
   }
 }

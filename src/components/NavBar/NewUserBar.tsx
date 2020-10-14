@@ -12,9 +12,9 @@ function NewUserBar() {
   const { t } = useTranslation();
   let authStore = AuthStore.useStore();
   let profileStore = ProfileStore.useStore();
-  /*async function logout() {
+  async function logOut() {
     authStore.set("token")(null);
-  }*/
+  }
 
   return (
     <ul className="nav navbar-nav ml-auto w-100 justify-content-end">
@@ -40,7 +40,7 @@ function NewUserBar() {
           >
             <div className={styles.pictureContainer}>
               <img
-                src={`https://storage.bhs.cloud.ovh.net/v1/AUTH_d86662c318654f248055a1f464721aa8/public/pp/${profileStore.get(
+                src={`http://s3.tryhosting.com.br/picture/profile/${profileStore.get(
                   "picture"
                 )}.webp`}
                 width="30"
@@ -90,10 +90,10 @@ function NewUserBar() {
             </Link>
           )}
           {authStore.get("isAuthenticated") && (
-            <Link className="dropdown-item" to="/logout">
+            <a className="dropdown-item" onClick={logOut}>
               <FontAwesomeIcon icon="sign-out-alt" />
               Log out
-            </Link>
+            </a>
           )}
         </div>
       </li>

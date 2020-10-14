@@ -2,18 +2,15 @@
   display: block;
   margin: 0 5px 20px 5px;
   border-radius: 5px;
-  -ms-flex: 1 1 auto;
-  flex: 1 1 auto;
+  margin-bottom: 10px;
 }
 
 .content {
   width: 100%;
-  display: block;
   border-radius: 5px;
 }
 
 .thumbnail {
-  display: block;
   width: 100%;
   position: relative;
   padding-top: 56.25%;
@@ -96,9 +93,10 @@
 }
 
 .videoInfo {
-  margin-top: 5px;
   padding: 2px;
   display: flex;
+  display: -ms-flexbox;
+  margin-left: 5px;
 }
 
 .videoFooter {
@@ -120,22 +118,6 @@
   font-size: 12px;
   border-radius: 5px;
   margin-right: 5px;
-  margin-bottom: 5px;
-}
-
-.dataOverlay {
-  color: #ececec;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  padding: 2px 5px 2px 5px;
-  background-color: rgba(0, 0, 0, 0.8);
-  font-size: 12px;
-  border-radius: 5px;
-  p {
-    margin: 0;
-  }
-  margin-left: 5px;
   margin-bottom: 5px;
 }
 

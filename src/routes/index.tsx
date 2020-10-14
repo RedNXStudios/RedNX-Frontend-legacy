@@ -44,13 +44,13 @@ function SubRoute() {
               <SideBarStore.Container>
                 <NavBar />
                 <SideBar />
+                <Switch>
+                  <Route exact component={Home} path="/" />
+                  <Route component={Channel} path="/channel/:link" />
+                  <Route component={Watch} path="/watch/:guid" />
+                  <PrivateRoute component={Dashboard} path="/dashboard" />
+                </Switch>
               </SideBarStore.Container>
-              <Switch>
-                <Route exact component={Home} path="/" />
-                <Route component={Channel} path="/channel/:link" />
-                <Route component={Watch} path="/watch/:guid" />
-                <PrivateRoute component={Dashboard} path="/dashboard" />
-              </Switch>
             </FeedStore.Container>
           </WatchStore.Container>
         </ChannelStore.Container>

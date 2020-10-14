@@ -12,6 +12,8 @@ type State = {
   views: number;
   likes: number;
   dislikes: number;
+  liked: boolean;
+  disliked: boolean;
   creationDate: string;
 };
 
@@ -27,6 +29,8 @@ let initialState: State = {
   views: 0,
   likes: 0,
   dislikes: 0,
+  liked: false,
+  disliked: false,
   creationDate: "",
 };
 

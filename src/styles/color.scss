@@ -54,17 +54,18 @@ $alert-bg-level: 10;
 $alert-border-level: 0;
 $alert-color-level: -10;
 
+// -- Colors --
 $red: #ff003d;
 $pink: #e83e8c;
 
 $theme-colors: (
   "pink": $pink,
-  "red":  $red,
+  "red": $red,
 );
 
 $colors: (
   "pink": $pink,
-  "red":  $red,
+  "red": $red,
 );
 
 $danger: $red;

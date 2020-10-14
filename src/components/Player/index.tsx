@@ -2,6 +2,8 @@ import React from "react";
 import Plyr, { Source } from "plyr";
 import $ from "jquery";
 
+import styles from "./Player.module.scss";
+
 interface IProps {}
 
 interface IState {
@@ -43,7 +45,7 @@ class Player extends React.Component<IProps, IState> {
 
     player.on("qualitychange", (event) => {
       let plyr: Plyr | undefined = this.state.player;
-      if(plyr === undefined) return;
+      if (plyr === undefined) return;
       this.initPlayer(this.state.sourceData, plyr);
     });
     this.initPlayer(sourceData, player);
@@ -74,12 +76,16 @@ class Player extends React.Component<IProps, IState> {
 
   render() {
     return (
-      <video
-        controls
-        crossOrigin="true"
-        playsInline
-        poster={`logo512.png`}
-      />
+      <div className={styles.playerWrapper}>
+        <div className={styles.playerContainer}>
+          <video
+            controls
+            crossOrigin="true"
+            playsInline
+            poster={`http://s3.tryhosting.com.br/video/thumbnail/test.webp`}
+          />
+        </div>
+      </div>
     );
   }
 }
