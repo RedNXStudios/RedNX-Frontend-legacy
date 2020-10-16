@@ -95,5 +95,12 @@
 
   "page.watch.hideDescription": "Hide Description",
   "page.watch.showDescription": "Show Description",
-  "page.watch.share": "Share"
+  "page.watch.share": "Share",
+  "page.watch.needLogin.youNeed": "You need",
+  "page.watch.needLogin.toLogin": "to login",
+  "page.watch.needLogin.toSend": "to send a comment.",
+  "page.watch.commentPlaceHolder": "Write something cool here.",
+  "page.watch.remainingCharacters": "You have {{count}} character left.",
+  "page.watch.remainingCharacters_plural": "You have {{count}} characters left.",
+  "page.watch.sendComment": "Send"
 }

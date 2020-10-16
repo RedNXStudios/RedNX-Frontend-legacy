@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import UploadProfilePicture from "../../components/Modal/UploadProfilePicture";
-import ProfileStore from "../../undux/ProfileStore";
 import PrivacyTab from "./PrivacyTab";
 import ProfileTab from "./ProfileTab";
 import SecurityTab from "./SecurityTab";
@@ -42,11 +41,9 @@ function Dashboard() {
           </a>
         </nav>
         <div className="tab-content">
-          <ProfileStore.Container>
-            <ProfileTab />
-            <SecurityTab />
-            <PrivacyTab />
-          </ProfileStore.Container>
+          <ProfileTab />
+          <SecurityTab />
+          <PrivacyTab />
         </div>
         <UploadProfilePicture />
       </div>

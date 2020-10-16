@@ -96,7 +96,7 @@ function Channel(props: any) {
         <div className={styles.leftBox}>
           <div className={styles.channelPicture}>
             <img
-              src={`http://s3.tryhosting.com.br/picture/channel/${channelStore.get(
+              src={`http://s3.tryhosting.com.br/channel/picture/${channelStore.get(
                 "picture"
               )}`}
               alt="Channel"

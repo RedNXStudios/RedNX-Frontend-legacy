@@ -77,7 +77,7 @@ function VideoThumbnail(props: PropType) {
               {props.data.channel && (
                 <Link to={`/channel/${props.data.channel.link}`}>
                   <img
-                    src={`http://s3.tryhosting.com.br/picture/channel/${props.data.channel.picture}`}
+                    src={`http://s3.tryhosting.com.br/channel/picture/${props.data.channel.picture}`}
                     alt="Avatar do Canal"
                   />
                 </Link>

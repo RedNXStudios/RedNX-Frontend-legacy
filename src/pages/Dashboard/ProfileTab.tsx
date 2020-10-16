@@ -37,9 +37,9 @@ function ProfileTab() {
               </div>
               <div className={styles.pictureContainer}>
                 <img
-                  src={`https://storage.bhs.cloud.ovh.net/v1/AUTH_d86662c318654f248055a1f464721aa8/public/pp/${profileStore.get(
+                  src={`http://s3.tryhosting.com.br/profile/picture/${profileStore.get(
                     "picture"
-                  )}.webp`}
+                  )}`}
                   width="100"
                   height="100"
                   className="mx-auto d-inline-block align-top"

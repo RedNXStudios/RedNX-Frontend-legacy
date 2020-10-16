@@ -6,6 +6,7 @@ import FeedStore from "../undux/FeedStore";
 import ProfileStore from "../undux/ProfileStore";
 import SideBarStore from "../undux/SideBarStore";
 import WatchStore from "../undux/WatchStore";
+import ProfileLoader from "../utils/ProfileLoader";
 
 import OnlyPublicRoute from "./OnlyPublicRoute";
 import PrivateRoute from "./PrivateRoute";
@@ -38,22 +39,23 @@ function SubRoute() {
   return (
     <div className="wrapper">
       <ProfileStore.Container>
-        <ChannelStore.Container>
-          <WatchStore.Container>
-            <FeedStore.Container>
-              <SideBarStore.Container>
-                <NavBar />
-                <SideBar />
+        <ProfileLoader />
+        <SideBarStore.Container>
+          <NavBar />
+          <SideBar />
+          <ChannelStore.Container>
+            <WatchStore.Container>
+              <FeedStore.Container>
                 <Switch>
                   <Route exact component={Home} path="/" />
                   <Route component={Channel} path="/channel/:link" />
                   <Route component={Watch} path="/watch/:guid" />
                   <PrivateRoute component={Dashboard} path="/dashboard" />
                 </Switch>
-              </SideBarStore.Container>
-            </FeedStore.Container>
-          </WatchStore.Container>
-        </ChannelStore.Container>
+              </FeedStore.Container>
+            </WatchStore.Container>
+          </ChannelStore.Container>
+        </SideBarStore.Container>
       </ProfileStore.Container>
     </div>
   );

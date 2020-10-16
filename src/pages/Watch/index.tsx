@@ -3,12 +3,8 @@ import React, { useEffect } from "react";
 import WatchStore from "../../undux/WatchStore";
 import ChannelStore from "../../undux/ChannelStore";
 import FeedStore from "../../undux/FeedStore";
-import AuthStore from "../../undux/AuthStore";
 import Net from "../../utils/Net";
-import { numberToText } from "../../utils/Conversion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useHistory, useParams } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 
 import styles from "./Watch.module.scss";
 import Player from "../../components/Player";
@@ -16,19 +12,18 @@ import WatchFeed from "../../components/Feed/WatchFeed";
 import TitleBar from "../../components/Watch/TitleBar";
 import DescriptionContainer from "../../components/Watch/DescriptionContainer";
 import SideBarStore from "../../undux/SideBarStore";
-
+import CommentsContainer from "../../components/Watch/CommentsContainer";
 interface PathParamsType {
   guid: string;
 }
+
 function Watch(props: any) {
   let watchStore = WatchStore.useStore();
   let channelStore = ChannelStore.useStore();
   let feedStore = FeedStore.useStore();
-  let authStore = AuthStore.useStore();
   let sideBarStore = SideBarStore.useStore();
   let history = useHistory();
   let params: PathParamsType = useParams();
-  let { t } = useTranslation();
 
   useEffect(() => {
     if (params.guid !== watchStore.get("guid")) {
@@ -53,6 +48,7 @@ function Watch(props: any) {
           watchStore.set("liked")(e.data.video.liked);
           watchStore.set("disliked")(e.data.video.disliked);
           watchStore.set("creationDate")(e.data.video.creationDate);
+          watchStore.set("comments")([]);
           if (e.data.video.channel) {
             channelStore.set("id")(e.data.video.channel.id);
             channelStore.set("guid")(e.data.video.channel.guid);
@@ -63,12 +59,20 @@ function Watch(props: any) {
             channelStore.set("followers")(e.data.video.channel.followers);
             channelStore.set("following")(e.data.video.channel.following);
           }
+          Net.get("/api/feed/new").then((e) => {
+            feedStore.set("watchFeed")(e.data.videos);
+          });
+          Net.post("/api/comment/get", { videoId: e.data.video.id }).then((e) => {
+            if(e.data) {
+              watchStore.set("comments")(e.data);
+            }
+          });
         }
       });
     }
   });
 
-  function followChannel() {
+  /*function followChannel() {
     if (authStore.get("isAuthenticated")) {
       const isFollowing = !channelStore.get("following");
       Net.post("/api/channels/follow", {
@@ -93,18 +97,23 @@ function Watch(props: any) {
     } else {
       history.push("/login");
     }
-  }
+  }*/
 
   return (
-    <div className={`${styles.pageContent} ${!sideBarStore.get("show") && styles.removeMargin}`}>
+    <div
+      className={`${styles.pageContent} ${
+        !sideBarStore.get("show") && styles.removeMargin
+      }`}
+    >
       <div className={`${styles.container} row no-gutters`}>
         <div className="col-sm-12 col-md-12 col-lg-12 col-xl-9">
           <Player />
           <TitleBar />
           <DescriptionContainer />
+          <CommentsContainer />
         </div>
         <div className="col-sm-12 col-md-12 col-lg-12 col-xl-3">
-          <WatchFeed />
+          <WatchFeed videos={feedStore.get("watchFeed")} />
         </div>
       </div>
     </div>

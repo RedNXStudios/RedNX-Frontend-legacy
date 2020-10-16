@@ -12,6 +12,7 @@ function NewUserBar() {
   const { t } = useTranslation();
   let authStore = AuthStore.useStore();
   let profileStore = ProfileStore.useStore();
+
   async function logOut() {
     authStore.set("token")(null);
   }
@@ -40,9 +41,9 @@ function NewUserBar() {
           >
             <div className={styles.pictureContainer}>
               <img
-                src={`http://s3.tryhosting.com.br/picture/profile/${profileStore.get(
+                src={`http://s3.tryhosting.com.br/profile/picture/${profileStore.get(
                   "picture"
-                )}.webp`}
+                )}`}
                 width="30"
                 height="30"
                 className="mx-auto d-inline-block align-top"

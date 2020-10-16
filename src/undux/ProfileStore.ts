@@ -2,6 +2,7 @@ import { Store, createConnectedStore, withReduxDevtools } from "undux";
 import ChannelData from "../models/ChannelData";
 
 type State = {
+  loaded: boolean;
   email: string;
   username: string;
   displayUsername: string;
@@ -11,6 +12,7 @@ type State = {
 };
 
 let initialState: State = {
+  loaded: false,
   email: "default@default.com",
   username: "default",
   displayUsername: "Default",

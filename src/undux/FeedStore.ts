@@ -12,10 +12,12 @@ type ChannelVideoData = {
 
 type State = {
   channelFeed: any[];
+  watchFeed: any[];
 };
 
 let initialState: State = {
   channelFeed: [{}, {}, {}, {}, {}, {}, {}, {}],
+  watchFeed: [{}, {}, {}, {}, {}, {}, {}, {}],
 };
 
 export default createConnectedStore(initialState, withReduxDevtools);

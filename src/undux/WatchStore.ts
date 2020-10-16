@@ -15,6 +15,7 @@ type State = {
   liked: boolean;
   disliked: boolean;
   creationDate: string;
+  comments: any[];
 };
 
 let initialState: State = {
@@ -32,6 +33,7 @@ let initialState: State = {
   liked: false,
   disliked: false,
   creationDate: "",
+  comments: []
 };
 
 export default createConnectedStore(initialState, withReduxDevtools);

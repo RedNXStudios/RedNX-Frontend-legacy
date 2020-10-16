@@ -1,6 +1,6 @@
 import React from "react";
 import Plyr, { Source } from "plyr";
-import $ from "jquery";
+//import $ from "jquery";
 
 import styles from "./Player.module.scss";
 

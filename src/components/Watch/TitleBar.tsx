@@ -37,7 +37,7 @@ function TitleBar() {
     <div className={`${styles.videoTitleContainer}`}>
       <div className={`${styles.videoIcon}`}>
         {watchStore.get("icon") && (
-          <img src={`http://s3.tryhosting.com.br/picture/channel/aa7f8b1894e94af8badab586e38d8e8e`} alt="Icon" />
+          <img src={`http://s3.tryhosting.com.br/video/icon/${watchStore.get("icon")}`} alt="Icon" />
         )}
       </div>
       <div

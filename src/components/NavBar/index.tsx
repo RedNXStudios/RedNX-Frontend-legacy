@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import ProfileStore from "../../undux/ProfileStore";
 import NavLink from "./NavLink";
 import SearchBar from "./SearchBar";
 import NewUserBar from "./NewUserBar";
@@ -68,9 +67,7 @@ function NavBar() {
         <ul className="navbar-nav w-100 justify-content-center hidden-md">
           <SearchBar hasNavbarToggler={false} />
         </ul>
-        <ProfileStore.Container>
-          <NewUserBar />
-        </ProfileStore.Container>
+        <NewUserBar />
       </div>
     </nav>
   );

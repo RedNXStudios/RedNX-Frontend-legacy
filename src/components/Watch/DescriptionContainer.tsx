@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useTranslation, withTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { numberToText } from "../../utils/Conversion";
 import AuthStore from "../../undux/AuthStore";
@@ -63,7 +63,7 @@ function DescriptionContainer(props: any) {
           if (isLike == null) {
             watchStore.set("liked")(false);
             watchStore.set("disliked")(false);
-          } else if (isLike == true) {
+          } else if (isLike === true) {
             watchStore.set("liked")(true);
             watchStore.set("disliked")(false);
           } else {
@@ -84,7 +84,7 @@ function DescriptionContainer(props: any) {
             to={`/channel/${channelStore.get("link")}`}
           >
             <img
-              src={`http://s3.tryhosting.com.br/picture/channel/${
+              src={`http://s3.tryhosting.com.br/channel/picture/${
                 channelStore.get("picture") || "default"
               }`}
               alt="Channel avatar"
