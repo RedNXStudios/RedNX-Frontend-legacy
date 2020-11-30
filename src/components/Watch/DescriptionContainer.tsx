@@ -3,18 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { numberToText } from "../../utils/Conversion";
-import AuthStore from "../../undux/AuthStore";
-import WatchStore from "../../undux/WatchStore";
+import UnduxStores from "../../undux/UnduxStores";
 
 import styles from "./Watch.module.scss";
-import ChannelStore from "../../undux/ChannelStore";
 import Net from "../../utils/Net";
 
 function DescriptionContainer(props: any) {
   const [showDescription, setShowDescription] = useState(false);
-  let authStore = AuthStore.useStore();
-  let watchStore = WatchStore.useStore();
-  let channelStore = ChannelStore.useStore();
+  let { auth, watch, channel } = UnduxStores.useStores();
   let { t } = useTranslation();
 
   function followChannel(e: any) {
@@ -52,8 +48,8 @@ function DescriptionContainer(props: any) {
 
   function likeVideo(e: React.MouseEvent, isLike: boolean | null) {
     e.preventDefault();
-    if (!authStore.get("isAuthenticated")) return;
-    Net.post("/api/video/like", { id: watchStore.get("id"), isLike }).then(
+    if (!auth.get("isAuthenticated")) return;
+    Net.post("/api/video/like", { id: watch.get("id"), isLike }).then(
       (e) => {
         if (e.data && e.data.error) {
           alert("Failed to like");
@@ -61,14 +57,14 @@ function DescriptionContainer(props: any) {
         }
         if (e.data && e.data.success) {
           if (isLike == null) {
-            watchStore.set("liked")(false);
-            watchStore.set("disliked")(false);
+            watch.set("liked")(false);
+            watch.set("disliked")(false);
           } else if (isLike === true) {
-            watchStore.set("liked")(true);
-            watchStore.set("disliked")(false);
+            watch.set("liked")(true);
+            watch.set("disliked")(false);
           } else {
-            watchStore.set("liked")(false);
-            watchStore.set("disliked")(true);
+            watch.set("liked")(false);
+            watch.set("disliked")(true);
           }
         }
       }
@@ -81,24 +77,24 @@ function DescriptionContainer(props: any) {
         <div className={styles.channelImage}>
           <Link
             className={styles.aaaaa}
-            to={`/channel/${channelStore.get("link")}`}
+            to={`/channel/${channel.get("link")}`}
           >
             <img
               src={`http://s3.tryhosting.com.br/channel/picture/${
-                channelStore.get("picture") || "default"
+                channel.get("picture") || "default"
               }`}
               alt="Channel avatar"
             />
           </Link>
           <div className={styles.channelNameContainer}>
             <div className={styles.channelName}>
-              <Link to={`/channel/${channelStore.get("link")}`}>
-                {channelStore.get("name")}
+              <Link to={`/channel/${channel.get("link")}`}>
+                {channel.get("name")}
               </Link>
             </div>
             <div className={styles.channelFollowers}>
               {t("channel.follower", {
-                countText: numberToText(channelStore.get("followers"), t),
+                countText: numberToText(channel.get("followers"), t),
               })}
             </div>
           </div>
@@ -108,10 +104,10 @@ function DescriptionContainer(props: any) {
             <button
               type="button"
               className={`btn btn-sm ${
-                watchStore.get("liked") ? "btn-danger" : ""
+                watch.get("liked") ? "btn-danger" : ""
               }`}
               onClick={(e) =>
-                likeVideo(e, watchStore.get("liked") ? null : true)
+                likeVideo(e, watch.get("liked") ? null : true)
               }
             >
               <FontAwesomeIcon icon="thumbs-up" className={styles.icon} />
@@ -120,10 +116,10 @@ function DescriptionContainer(props: any) {
             <button
               type="button"
               className={`btn btn-sm ${
-                watchStore.get("disliked") ? "btn-danger" : ""
+                watch.get("disliked") ? "btn-danger" : ""
               }`}
               onClick={(e) =>
-                likeVideo(e, watchStore.get("disliked") ? null : false)
+                likeVideo(e, watch.get("disliked") ? null : false)
               }
             >
               <FontAwesomeIcon icon="thumbs-down" className={styles.icon} />
@@ -147,7 +143,7 @@ function DescriptionContainer(props: any) {
             <button
               type="button"
               className={`btn btn-sm ${
-                channelStore.get("following")
+                channel.get("following")
                   ? "btn-danger"
                   : "btn-outline-danger"
               }`}
@@ -155,7 +151,7 @@ function DescriptionContainer(props: any) {
             >
               <FontAwesomeIcon icon="heart" className={styles.icon} />
               &nbsp;&nbsp;{" "}
-              {channelStore.get("following")
+              {channel.get("following")
                 ? t("channel.following")
                 : t("channel.follow")}
             </button>
@@ -168,7 +164,7 @@ function DescriptionContainer(props: any) {
             showDescription ? styles.active : ""
           }`}
         >
-          {watchStore.get("description")}
+          {channel.get("description")}
         </div>
         <button type="button" className={`btn`} onClick={toggleDescription}>
           <FontAwesomeIcon

@@ -4,23 +4,19 @@ import React, { useState } from "react";
 import TextareaAutosize from "react-autosize-textarea";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import AuthStore from "../../undux/AuthStore";
-import ProfileStore from "../../undux/ProfileStore";
-import WatchStore from "../../undux/WatchStore";
+import UnduxStores from "../../undux/UnduxStores";
 import Net from "../../utils/Net";
 
 import styles from "./Watch.module.scss";
 
 function CommentsContainer(props: any) {
   const [tempComment, setTempComment] = useState<string>("");
-  let profileStore = ProfileStore.useStore();
-  let watchStore = WatchStore.useStore();
-  let authStore = AuthStore.useStore();
+  let { auth, profile, watch } = UnduxStores.useStores();
   let { t } = useTranslation();
 
   function sendComment(e: any) {
     e.preventDefault();
-    if (!authStore.get("isAuthenticated")) return;
+    if (!auth.get("isAuthenticated")) return;
     if (tempComment.length < 10) {
       alert(t("errors.commentTooSmall"));
       return;
@@ -30,23 +26,23 @@ function CommentsContainer(props: any) {
       return;
     }
     Net.post("/api/comment/new", {
-      videoId: watchStore.get("id"),
+      videoId: watch.get("id"),
       message: tempComment,
     }).then((e) => {
       if (e.data && e.data.success) {
-        var commentsArray = watchStore.get("comments");
+        var commentsArray = watch.get("comments");
         commentsArray.unshift({
           id: e.data.id,
           message: e.data.message,
           likes: 0,
           dislikes: 0,
           account: {
-            displayUsername: profileStore.get("displayUsername"),
-            picture: profileStore.get("picture"),
+            displayUsername: profile.get("displayUsername"),
+            picture: profile.get("picture"),
           },
           isLiked: null,
         });
-        watchStore.set("comments")(commentsArray);
+        watch.set("comments")(commentsArray);
         setTempComment("");
       }
     });
@@ -75,10 +71,10 @@ function CommentsContainer(props: any) {
   return (
     <div className={styles.commentsContainer}>
       <div className={styles.postComment}>
-        {authStore.get("isAuthenticated") ? (
+        {auth.get("isAuthenticated") ? (
           <div className={`${styles.media} media`}>
             <img
-              src={`http://s3.tryhosting.com.br/profile/picture/${profileStore.get(
+              src={`http://s3.tryhosting.com.br/profile/picture/${profile.get(
                 "picture"
               )}`}
               alt="Profile avatar"
@@ -119,7 +115,7 @@ function CommentsContainer(props: any) {
         )}
       </div>
       <ul className="list-unstyled">
-        {watchStore.get("comments").map((comment, index) => (
+        {watch.get("comments").map((comment, index) => (
           <li className={`${styles.media} media`} key={index}>
             <img
               src={`http://s3.tryhosting.com.br/profile/picture/${

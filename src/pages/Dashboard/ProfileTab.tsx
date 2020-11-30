@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import ProfileStore from "../../undux/ProfileStore";
+import UnduxStores from "../../undux/UnduxStores";
 
 import styles from "./dasboard.module.scss";
 
 function ProfileTab() {
-  let profileStore = ProfileStore.useStore();
+  let { profile } = UnduxStores.useStores();
   return (
     <div className="tab-pane fade show active" id="profile">
       <div className="card">
@@ -37,7 +37,7 @@ function ProfileTab() {
               </div>
               <div className={styles.pictureContainer}>
                 <img
-                  src={`http://s3.tryhosting.com.br/profile/picture/${profileStore.get(
+                  src={`http://s3.tryhosting.com.br/profile/picture/${profile.get(
                     "picture"
                   )}`}
                   width="100"
@@ -54,7 +54,7 @@ function ProfileTab() {
             <input
               type="text"
               className="form-control"
-              value={profileStore.get("displayUsername")}
+              value={profile.get("displayUsername")}
               readOnly={true}
             />
           </div>
@@ -64,7 +64,7 @@ function ProfileTab() {
             <input
               type="text"
               className="form-control"
-              value={profileStore.get("username")}
+              value={profile.get("username")}
               disabled
             />
           </div>

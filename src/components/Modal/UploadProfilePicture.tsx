@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AvatarEditor from "react-avatar-editor";
 import { withTranslation, WithTranslation } from "react-i18next";
 import Net from "../../utils/Net";
-import ProfileStore, { StoreProps } from "../../undux/ProfileStore";
+import UnduxStores, { StoreProps } from "../../undux/UnduxStores";
 
 interface IProps extends WithTranslation, StoreProps {}
 
@@ -101,7 +101,7 @@ class UploadProfilePicture extends React.Component<IProps, IState> {
           }
           if (e.data && e.data.success) {
             this.setState({ success: true, uploading: false });
-            this.props.store.set("picture")(e.data.guid);
+            this.props.profile.set("picture")(e.data.guid);
             $("#uploadAvatarModal").modal("hide");
           } else this.setState({ uploading: false });
         })
@@ -312,4 +312,4 @@ class UploadProfilePicture extends React.Component<IProps, IState> {
   }
 }
 
-export default ProfileStore.withStore(withTranslation()(UploadProfilePicture));
+export default UnduxStores.withStores(withTranslation()(UploadProfilePicture));

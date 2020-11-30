@@ -1,18 +1,18 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
+import UnduxStores from "../../undux/UnduxStores";
 import { useTranslation } from "react-i18next";
-import AuthStore from "../../undux/AuthStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
 import styles from "./NavBar.module.scss";
 
-function UserBar() {
+function NewUserBar() {
   const { t } = useTranslation();
-  let authStore = AuthStore.useStore();
+  let { auth, profile } = UnduxStores.useStores();
 
-  async function logout() {
-    authStore.set("token")(null);
+  async function logOut() {
+    auth.set("token")(null);
   }
 
   return (
@@ -29,50 +29,73 @@ function UserBar() {
         </a>
       </li>
       <li className="nav-item dropdown">
-        <a
-          className={`${styles.userBar} nav-link`}
-          href="#"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <div className={styles.profileIcon}>
-            {/*<img
-              src={`https://storage.bhs.cloud.ovh.net/v1/AUTH_d86662c318654f248055a1f464721aa8/public/pp/${authStore.profile.get(
-                "picture"
-              )}.webp`}
-              width="30"
-              height="30"
-              className="rounded mx-auto d-inline-block align-top"
-              alt="Profile"
-            />*/}
-          </div>
-        </a>
+        {auth.get("isAuthenticated") ? (
+          <a
+            className={`nav-link ${styles.profilePicture}`}
+            href="#"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <div className={styles.pictureContainer}>
+              <img
+                src={`http://s3.tryhosting.com.br/profile/picture/${profile.get(
+                  "picture"
+                )}`}
+                width="30"
+                height="30"
+                className="mx-auto d-inline-block align-top"
+                alt="Profile"
+              />
+            </div>
+          </a>
+        ) : (
+          <a
+            className="nav-link"
+            href="#"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <FontAwesomeIcon icon="user" />
+          </a>
+        )}
         <div
-          className={`${styles.animate} ${styles.slideIn} dropdown-menu dropdown-menu-right`}
+          className={`${styles.animate} ${styles.slideIn} ${styles.dropDown} dropdown-menu dropdown-menu-right`}
           aria-labelledby="navbarDropdownMenuLink"
         >
-          <Link className="dropdown-item" to="/dashboard">
-            {t("components.navbar.dashboard")}
+          {auth.get("isAuthenticated") && (
+            <Link className="dropdown-item" to="/dashboard">
+              <FontAwesomeIcon icon="sliders-h" />
+              Dashboard
+            </Link>
+          )}
+          <div className="dropdown-divider"></div>
+          <Link className="dropdown-item" to="/language">
+            <FontAwesomeIcon icon="globe-americas" />
+            {t("navbar.language")}
           </Link>
-          <Link className="dropdown-item" to="/profile">
-            {t("components.navbar.profile")}
-          </Link>
-          <hr />
-          <button
-            className="dropdown-item"
-            data-toggle="modal"
-            data-target="#languageModal"
-          >
-            {t("components.navbar.language")}
-          </button>
-          <button className="dropdown-item" onClick={logout}>
-            {t("components.navbar.logout")}
-          </button>
+          <div className="dropdown-divider"></div>
+          {!auth.get("isAuthenticated") && (
+            <div>
+              <Link className="dropdown-item" to="/login">
+                <FontAwesomeIcon icon="sign-in-alt" />
+                Login
+              </Link>
+              <Link className="dropdown-item" to="/register">
+                <FontAwesomeIcon icon="sign-in-alt" />
+                Register
+              </Link>
+              <a className="dropdown-item" onClick={logOut}>
+                <FontAwesomeIcon icon="sign-out-alt" />
+                Log out
+              </a>
+            </div>
+          )}
         </div>
       </li>
     </ul>
   );
 }
 
-export default UserBar;
+export default NewUserBar;

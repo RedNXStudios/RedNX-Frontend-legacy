@@ -1,7 +1,6 @@
 import React from "react";
 
-import SideBarStore from "../../undux/SideBarStore";
-import AuthStore from "../../undux/AuthStore";
+import UnduxStores from "../../undux/UnduxStores";
 
 import MainNav from "./MainNav";
 import CategoryNav from "./CategoryNav";
@@ -10,8 +9,7 @@ import styles from "./SideBar.module.scss";
 import { matchPath, useLocation } from "react-router-dom";
 
 function SideBar() {
-  let sideBarStore = SideBarStore.useStore();
-  let authStore = AuthStore.useStore();
+  let { sidebar, auth } = UnduxStores.useStores();
   let location = useLocation();
   let matchWatch = matchPath(location.pathname, {
     path: "/watch/:guid",
@@ -21,13 +19,13 @@ function SideBar() {
   return (
     <div
       className={`${styles.sideBar} ${
-        !sideBarStore.get("show") && styles.hide
+        !sidebar.get("show") && styles.hide
       } ${matchWatch && styles.watchHide}`}
     >
       <MainNav />
       <hr />
       {/*authStore.get("isAuthenticated") && <FollowingNav />*/}
-      {authStore.get("isAuthenticated") && <hr />}
+      {auth.get("isAuthenticated") && <hr />}
       <CategoryNav />
     </div>
   );

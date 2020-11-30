@@ -1,6 +1,6 @@
 import React from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
-import ProfileStore, { StoreProps } from "../../../undux/ProfileStore";
+import UnduxStores, { StoreProps } from "../../../undux/UnduxStores";
 import Net from "../../../utils/Net";
 
 import styles from "../dasboard.module.scss";
@@ -18,7 +18,7 @@ class ChangeEmailCard extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      email: props.store.get("email"),
+      email: props.profile.get("email"),
       password: "",
       errorId: -1,
     };
@@ -111,4 +111,4 @@ class ChangeEmailCard extends React.Component<IProps, IState> {
   }
 }
 
-export default ProfileStore.withStore(withTranslation()(ChangeEmailCard));
+export default UnduxStores.withStores(withTranslation()(ChangeEmailCard));

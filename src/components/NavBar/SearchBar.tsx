@@ -1,7 +1,7 @@
 import React from "react";
+import UnduxStores, { StoreProps } from "../../undux/UnduxStores";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import SideBarStore, { StoreProps } from "../../undux/SideBarStore";
 import { withTranslation, WithTranslation } from "react-i18next";
 
 import styles from "./NavBar.module.scss";
@@ -22,8 +22,8 @@ class SearchBar extends React.Component<PropType, IState> {
   }
 
   toggleSideBar = () => {
-    const { store } = this.props;
-    store.set("show")(!store.get("show"));
+    const { sidebar } = this.props;
+    sidebar.set("show")(!sidebar.get("show"));
   }
 
   handleSubmit = (e: any) => {
@@ -82,4 +82,4 @@ class SearchBar extends React.Component<PropType, IState> {
   }
 }
 
-export default SideBarStore.withStore(withTranslation()(SearchBar));
+export default UnduxStores.withStores(withTranslation()(SearchBar));

@@ -1,8 +1,6 @@
 /* eslint-disable jsx-a11y/role-supports-aria-props */
 import React, { useEffect } from "react";
-import WatchStore from "../../undux/WatchStore";
-import ChannelStore from "../../undux/ChannelStore";
-import FeedStore from "../../undux/FeedStore";
+import UnduxStores from "../../undux/UnduxStores";
 import Net from "../../utils/Net";
 import { useHistory, useParams } from "react-router-dom";
 
@@ -11,22 +9,18 @@ import Player from "../../components/Player";
 import WatchFeed from "../../components/Feed/WatchFeed";
 import TitleBar from "../../components/Watch/TitleBar";
 import DescriptionContainer from "../../components/Watch/DescriptionContainer";
-import SideBarStore from "../../undux/SideBarStore";
 import CommentsContainer from "../../components/Watch/CommentsContainer";
 interface PathParamsType {
   guid: string;
 }
 
 function Watch(props: any) {
-  let watchStore = WatchStore.useStore();
-  let channelStore = ChannelStore.useStore();
-  let feedStore = FeedStore.useStore();
-  let sideBarStore = SideBarStore.useStore();
+  let { watch, channel, feed, sidebar } = UnduxStores.useStores();
   let history = useHistory();
   let params: PathParamsType = useParams();
 
   useEffect(() => {
-    if (params.guid !== watchStore.get("guid")) {
+    if (params.guid !== watch.get("guid")) {
       Net.post("/api/video/get", { guid: params.guid }).then((e) => {
         if (e.data && e.data.error) {
           alert("error1");
@@ -34,37 +28,37 @@ function Watch(props: any) {
           return;
         }
         if (e.data && e.data.video) {
-          watchStore.set("guid")(e.data.video.guid);
-          watchStore.set("id")(e.data.video.id);
-          watchStore.set("title")(e.data.video.title);
-          watchStore.set("classification")(e.data.video.classification);
-          watchStore.set("description")(e.data.video.description);
-          watchStore.set("videoLength")(e.data.video.videoLength);
-          watchStore.set("thumb")(e.data.video.thumb);
-          watchStore.set("icon")(e.data.video.icon);
-          watchStore.set("views")(e.data.video.views);
-          watchStore.set("likes")(e.data.video.likes);
-          watchStore.set("dislikes")(e.data.video.dislikes);
-          watchStore.set("liked")(e.data.video.liked);
-          watchStore.set("disliked")(e.data.video.disliked);
-          watchStore.set("creationDate")(e.data.video.creationDate);
-          watchStore.set("comments")([]);
+          watch.set("guid")(e.data.video.guid);
+          watch.set("id")(e.data.video.id);
+          watch.set("title")(e.data.video.title);
+          watch.set("classification")(e.data.video.classification);
+          watch.set("description")(e.data.video.description);
+          watch.set("videoLength")(e.data.video.videoLength);
+          watch.set("thumb")(e.data.video.thumb);
+          watch.set("icon")(e.data.video.icon);
+          watch.set("views")(e.data.video.views);
+          watch.set("likes")(e.data.video.likes);
+          watch.set("dislikes")(e.data.video.dislikes);
+          watch.set("liked")(e.data.video.liked);
+          watch.set("disliked")(e.data.video.disliked);
+          watch.set("creationDate")(e.data.video.creationDate);
+          watch.set("comments")([]);
           if (e.data.video.channel) {
-            channelStore.set("id")(e.data.video.channel.id);
-            channelStore.set("guid")(e.data.video.channel.guid);
-            channelStore.set("link")(e.data.video.channel.link);
-            channelStore.set("name")(e.data.video.channel.name);
-            channelStore.set("description")(e.data.video.channel.description);
-            channelStore.set("picture")(e.data.video.channel.picture);
-            channelStore.set("followers")(e.data.video.channel.followers);
-            channelStore.set("following")(e.data.video.channel.following);
+            channel.set("id")(e.data.video.channel.id);
+            channel.set("guid")(e.data.video.channel.guid);
+            channel.set("link")(e.data.video.channel.link);
+            channel.set("name")(e.data.video.channel.name);
+            channel.set("description")(e.data.video.channel.description);
+            channel.set("picture")(e.data.video.channel.picture);
+            channel.set("followers")(e.data.video.channel.followers);
+            channel.set("following")(e.data.video.channel.following);
           }
           Net.get("/api/feed/new").then((e) => {
-            feedStore.set("watchFeed")(e.data.videos);
+            feed.set("watchFeed")(e.data.videos);
           });
           Net.post("/api/comment/get", { videoId: e.data.video.id }).then((e) => {
             if(e.data) {
-              watchStore.set("comments")(e.data);
+              watch.set("comments")(e.data);
             }
           });
         }
@@ -102,7 +96,7 @@ function Watch(props: any) {
   return (
     <div
       className={`${styles.pageContent} ${
-        !sideBarStore.get("show") && styles.removeMargin
+        !sidebar.get("show") && styles.removeMargin
       }`}
     >
       <div className={`${styles.container} row no-gutters`}>
@@ -113,7 +107,7 @@ function Watch(props: any) {
           <CommentsContainer />
         </div>
         <div className="col-sm-12 col-md-12 col-lg-12 col-xl-3">
-          <WatchFeed videos={feedStore.get("watchFeed")} />
+          <WatchFeed videos={feed.get("watchFeed")} />
         </div>
       </div>
     </div>

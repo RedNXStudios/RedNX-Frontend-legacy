@@ -2,6 +2,10 @@
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "plyr/src/sass/plyr.scss";
 
+.navbar-brand {
+  font-size: 1.08rem;
+}
+
 .navbar {
   background-color: #282a2c;
   -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);

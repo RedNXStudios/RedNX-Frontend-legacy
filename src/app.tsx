@@ -5,8 +5,8 @@ import "./utils/FontAwesome";
 import "./utils/I18next";
 
 import Loading from "./pages/Loading/Loading";
-import AuthStore from "./undux/AuthStore";
-import SessionCheck from "./utils/SessionCheck";
+import UnduxStores from "./undux/UnduxStores";
+import SessionCheck from "./services/SessionCheck";
 
 import "bootstrap";
 import "jquery";
@@ -15,11 +15,11 @@ import "./styles/global.scss";
 function App() {
   return (
     <Suspense fallback={<Loading />}>
-      <AuthStore.Container>
+      <UnduxStores.Container>
         <SessionCheck>
           <Routes />
         </SessionCheck>
-      </AuthStore.Container>
+      </UnduxStores.Container>
     </Suspense>
   );
 }

@@ -4,14 +4,14 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import AuthStore from "../undux/AuthStore";
+import UnduxStores from "../undux/UnduxStores";
 
 const OnlyPublicRoute: React.FC<RouterPropsDOM> = ({
   component: Component,
   ...rest
 }) => {
-  let store = AuthStore.useStore();
-  return store.get("isAuthenticated") ? (
+  let { auth } = UnduxStores.useStores();
+  return auth.get("isAuthenticated") ? (
     <Redirect to="/" />
   ) : (
     <Route component={Component} {...rest} />

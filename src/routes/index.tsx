@@ -1,12 +1,7 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import AuthStore, { StoreProps } from "../undux/AuthStore";
-import ChannelStore from "../undux/ChannelStore";
-import FeedStore from "../undux/FeedStore";
-import ProfileStore from "../undux/ProfileStore";
-import SideBarStore from "../undux/SideBarStore";
-import WatchStore from "../undux/WatchStore";
-import ProfileLoader from "../utils/ProfileLoader";
+import UnduxStores, { StoreProps } from "../undux/UnduxStores";
+import ProfileLoader from "../services/ProfileLoader";
 
 import OnlyPublicRoute from "./OnlyPublicRoute";
 import PrivateRoute from "./PrivateRoute";
@@ -38,27 +33,17 @@ class Routes extends React.Component<StoreProps> {
 function SubRoute() {
   return (
     <div className="wrapper">
-      <ProfileStore.Container>
-        <ProfileLoader />
-        <SideBarStore.Container>
-          <NavBar />
-          <SideBar />
-          <ChannelStore.Container>
-            <WatchStore.Container>
-              <FeedStore.Container>
-                <Switch>
-                  <Route exact component={Home} path="/" />
-                  <Route component={Channel} path="/channel/:link" />
-                  <Route component={Watch} path="/watch/:guid" />
-                  <PrivateRoute component={Dashboard} path="/dashboard" />
-                </Switch>
-              </FeedStore.Container>
-            </WatchStore.Container>
-          </ChannelStore.Container>
-        </SideBarStore.Container>
-      </ProfileStore.Container>
+      <ProfileLoader />
+      <NavBar />
+      <SideBar />
+      <Switch>
+        <Route exact component={Home} path="/" />
+        <Route component={Channel} path="/channel/:link" />
+        <Route component={Watch} path="/watch/:guid" />
+        <PrivateRoute component={Dashboard} path="/dashboard" />
+      </Switch>
     </div>
   );
 }
 
-export default AuthStore.withStore(Routes);
+export default UnduxStores.withStores(Routes);

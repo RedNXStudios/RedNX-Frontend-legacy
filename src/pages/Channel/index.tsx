@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/role-supports-aria-props */
 import React, { useEffect } from "react";
 import ChannelFeed from "../../components/Feed/ChannelFeed";
-import ChannelStore from "../../undux/ChannelStore";
-import AuthStore from "../../undux/AuthStore";
+import UnduxStores from "../../undux/UnduxStores";
 import Net from "../../utils/Net";
 import { numberToText } from "../../utils/Conversion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,21 +9,18 @@ import { useHistory, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import styles from "./Channel.module.scss";
-import FeedStore from "../../undux/FeedStore";
 
 interface PathParamsType {
   link: string;
 }
 function Channel(props: any) {
-  let channelStore = ChannelStore.useStore();
-  let feedStore = FeedStore.useStore();
-  let authStore = AuthStore.useStore();
+  let { channel, feed, auth } = UnduxStores.useStores();
   let history = useHistory();
   let params: PathParamsType = useParams();
   let { t } = useTranslation();
 
   useEffect(() => {
-    if (params.link !== channelStore.get("link")) {
+    if (params.link !== channel.get("link")) {
       Net.post("/api/channels/get", { link: params.link })
         .then((e) => {
           if (e.data && e.data.error) {
@@ -32,14 +28,14 @@ function Channel(props: any) {
             return;
           }
           if (e.data && e.data.channel) {
-            channelStore.set("id")(e.data.channel.id);
-            channelStore.set("guid")(e.data.channel.guid);
-            channelStore.set("link")(e.data.channel.link);
-            channelStore.set("name")(e.data.channel.name);
-            channelStore.set("description")(e.data.channel.description);
-            channelStore.set("picture")(e.data.channel.picture);
-            channelStore.set("followers")(e.data.channel.followers);
-            channelStore.set("following")(e.data.channel.following);
+            channel.set("id")(e.data.channel.id);
+            channel.set("guid")(e.data.channel.guid);
+            channel.set("link")(e.data.channel.link);
+            channel.set("name")(e.data.channel.name);
+            channel.set("description")(e.data.channel.description);
+            channel.set("picture")(e.data.channel.picture);
+            channel.set("followers")(e.data.channel.followers);
+            channel.set("following")(e.data.channel.following);
             getVideos();
           }
         })
@@ -50,23 +46,23 @@ function Channel(props: any) {
   });
 
   function getVideos() {
-    Net.post("/api/channel/video/get", { id: channelStore.get("id") })
+    Net.post("/api/channel/video/get", { id: channel.get("id") })
       .then((e) => {
         if (e.data && e.data.error) {
           alert(e.data.error);
           return;
         }
         if (e.data && e.data.videos) {
-          feedStore.set("channelFeed")(e.data.videos);
+          feed.set("channelFeed")(e.data.videos);
         }
       });
   }
 
   function followChannel() {
-    if (authStore.get("isAuthenticated")) {
-      const isFollowing = !channelStore.get("following");
+    if (auth.get("isAuthenticated")) {
+      const isFollowing = !channel.get("following");
       Net.post("/api/channels/follow", {
-        channelGuid: channelStore.get("guid"),
+        channelGuid: channel.get("guid"),
         isFollowing,
       })
         .then((e) => {
@@ -75,7 +71,7 @@ function Channel(props: any) {
             return;
           }
           if (e.data && e.data.success) {
-            channelStore.set("following")(isFollowing);
+            channel.set("following")(isFollowing);
           }
         })
         .catch((e) => {
@@ -96,18 +92,18 @@ function Channel(props: any) {
         <div className={styles.leftBox}>
           <div className={styles.channelPicture}>
             <img
-              src={`http://s3.tryhosting.com.br/channel/picture/${channelStore.get(
+              src={`http://s3.tryhosting.com.br/channel/picture/${channel.get(
                 "picture"
               )}`}
               alt="Channel"
             />
           </div>
           <div className={styles.channelInfo}>
-            <span className={styles.name}>{channelStore.get("name")}</span>
+            <span className={styles.name}>{channel.get("name")}</span>
             <span className={styles.followers}>
               {t("channel.follower", {
-                count: channelStore.get("followers"),
-                countText: numberToText(channelStore.get("followers"), t),
+                count: channel.get("followers"),
+                countText: numberToText(channel.get("followers"), t),
               })}
             </span>
           </div>
@@ -117,7 +113,7 @@ function Channel(props: any) {
             <button
               type="button"
               className={`btn mx-1 ${
-                channelStore.get("following")
+                channel.get("following")
                   ? "btn-danger"
                   : "btn-outline-danger"
               }`}
@@ -125,14 +121,14 @@ function Channel(props: any) {
             >
               <FontAwesomeIcon
                 icon={
-                  channelStore.get("following")
+                  channel.get("following")
                     ? ["fas", "heart"]
                     : ["far", "heart"]
                 }
                 className={styles.icon}
               />
               &nbsp;
-              {channelStore.get("following")
+              {channel.get("following")
                 ? t("channel.following")
                 : t("channel.follow")}
             </button>
@@ -163,11 +159,11 @@ function Channel(props: any) {
         <div className="tab-content">
           <div className="tab-pane fade show active" id="videos">
             <div className="feed-list">
-              <ChannelFeed videos={feedStore.get("channelFeed")} />
+              <ChannelFeed videos={feed.get("channelFeed")} />
             </div>
           </div>
           <div className="tab-pane fade show" id="about">
-            {channelStore.get("description")}
+            {channel.get("description")}
           </div>
         </div>
       </div>

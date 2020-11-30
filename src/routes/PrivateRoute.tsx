@@ -1,10 +1,10 @@
 import React from "react";
 import { RouteProps as RouterPropsDOM, Route, Redirect } from 'react-router-dom'
-import AuthStore from "../undux/AuthStore";
+import UnduxStores from "../undux/UnduxStores";
 
 const PrivateRoute:React.FC<RouterPropsDOM> = ({ component: Component, ...rest }) => {
-  let store = AuthStore.useStore();
-  return store.get("isAuthenticated") ? (
+  let { auth } = UnduxStores.useStores();
+  return auth.get("isAuthenticated") ? (
     <Route component={Component} {...rest} />
   ) : (
     <Redirect to="login" />

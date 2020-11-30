@@ -1,5 +1,5 @@
 import React from "react";
-import WatchStore from "../../undux/WatchStore";
+import UnduxStores from "../../undux/UnduxStores";
 
 import styles from "./Watch.module.scss";
 
@@ -32,24 +32,24 @@ function getClassificationColor(classification: number | undefined | null) {
 }
 
 function TitleBar() {
-  let watchStore = WatchStore.useStore();
+  let { watch } = UnduxStores.useStores();
   return (
     <div className={`${styles.videoTitleContainer}`}>
       <div className={`${styles.videoIcon}`}>
-        {watchStore.get("icon") && (
-          <img src={`http://s3.tryhosting.com.br/video/icon/${watchStore.get("icon")}`} alt="Icon" />
+        {watch.get("icon") && (
+          <img src={`http://s3.tryhosting.com.br/video/icon/${watch.get("icon")}`} alt="Icon" />
         )}
       </div>
       <div
         className={`${styles.videoClassification}`}
         style={{
-          backgroundColor: getClassificationColor(watchStore.get("classification")),
+          backgroundColor: getClassificationColor(watch.get("classification")),
         }}
       >
-        {getClassification(watchStore.get("classification"))}
+        {getClassification(watch.get("classification"))}
       </div>
       <div className={`${styles.videoTitle}`}>
-        <h5>{watchStore.get("title")}</h5>
+        <h5>{watch.get("title")}</h5>
       </div>
     </div>
   );

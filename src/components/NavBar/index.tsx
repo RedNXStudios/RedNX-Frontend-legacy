@@ -3,13 +3,13 @@ import { Link, matchPath, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import NavLink from "./NavLink";
 import SearchBar from "./SearchBar";
-import NewUserBar from "./NewUserBar";
+import NewUserBar from "./UserBar";
 
 import styles from "./NavBar.module.scss";
-import SideBarStore from "../../undux/SideBarStore";
+import UnduxStores from "../../undux/UnduxStores";
 
 function NavBar() {
-  let sideBarStore = SideBarStore.useStore();
+  let { sidebar } = UnduxStores.useStores();
   let location = useLocation();
   let { t } = useTranslation();
   let matchWatch = matchPath(location.pathname, {
@@ -19,7 +19,7 @@ function NavBar() {
   });
 
   function toggleSideBar() {
-    sideBarStore.set("show")(!sideBarStore.get("show"));
+    sidebar.set("show")(!sidebar.get("show"));
   }
 
   return (

@@ -1,14 +1,14 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import AuthStore from "../../undux/AuthStore";
+import UnduxStores from "../../undux/UnduxStores";
 import NavLink from "./NavLink";
 
 import styles from "./SideBar.module.scss";
 
 function MainNav() {
   const { t } = useTranslation();
-  let authStore = AuthStore.useStore();
+  let { auth } = UnduxStores.useStores();
   return (
     <nav className={`nav flex-column ${styles.navVertical}`}>
       <li className={styles.navTable}>
@@ -27,7 +27,7 @@ function MainNav() {
           {t("sidebar.live")}
         </NavLink>
       </li>
-      {authStore.get("isAuthenticated") && (
+      {auth.get("isAuthenticated") && (
         <li className={`${styles.navTable}`}>
           <NavLink to="/following">
             <FontAwesomeIcon icon="heart" className={styles.icon} />{" "}
@@ -35,7 +35,7 @@ function MainNav() {
           </NavLink>
         </li>
       )}
-      {authStore.get("isAuthenticated") && (
+      {auth.get("isAuthenticated") && (
         <li className={`${styles.navTable}`}>
           <NavLink to="/history">
             <FontAwesomeIcon icon="history" className={styles.icon} />{" "}
