@@ -1,4 +1,5 @@
 import { EffectsAs, Store, createConnectedStoreAs } from "undux";
+import VideoDataModel from "../models/VideoDataModel";
 import {
   hasAuthenticationToken,
   getAuthenticationToken,
@@ -54,38 +55,27 @@ let initialSidebarState: Sidebar = {
 };
 
 type Watch = {
-  id: string;
-  guid: string;
-  title: string;
-  classification: number;
-  description: string;
-  videoLength: number;
-  thumb: string;
-  icon: string;
-  views: number;
-  likes: number;
-  dislikes: number;
-  liked: boolean;
-  disliked: boolean;
-  creationDate: string;
+  videoData: VideoDataModel;
   comments: any[];
 };
 
 let initialWatchState: Watch = {
-  id: "0",
-  guid: "default",
-  title: "Default",
-  classification: 0,
-  description: "",
-  videoLength: 0,
-  thumb: "default",
-  icon: "",
-  views: 0,
-  likes: 0,
-  dislikes: 0,
-  liked: false,
-  disliked: false,
-  creationDate: "",
+  videoData: {
+    id: "0",
+    guid: "default",
+    title: "Default",
+    classification: 0,
+    description: "",
+    videoLength: 0,
+    thumb: "default",
+    icon: "",
+    views: 0,
+    likes: 0,
+    dislikes: 0,
+    liked: false,
+    disliked: false,
+    creationDate: "",
+  },
   comments: [],
 };
 

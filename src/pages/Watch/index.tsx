@@ -10,6 +10,8 @@ import WatchFeed from "../../components/Feed/WatchFeed";
 import TitleBar from "../../components/Watch/TitleBar";
 import DescriptionContainer from "../../components/Watch/DescriptionContainer";
 import CommentsContainer from "../../components/Watch/CommentsContainer";
+import ShareVideoModal from "../../components/Modal/ShareVideoModal";
+import ReportVideoModal from "../../components/Modal/ReportVideoModal";
 interface PathParamsType {
   guid: string;
 }
@@ -20,7 +22,7 @@ function Watch(props: any) {
   let params: PathParamsType = useParams();
 
   useEffect(() => {
-    if (params.guid !== watch.get("guid")) {
+    if (params.guid !== watch.get("videoData").guid) {
       Net.post("/api/video/get", { guid: params.guid }).then((e) => {
         if (e.data && e.data.error) {
           alert("error1");
@@ -28,20 +30,21 @@ function Watch(props: any) {
           return;
         }
         if (e.data && e.data.video) {
-          watch.set("guid")(e.data.video.guid);
-          watch.set("id")(e.data.video.id);
-          watch.set("title")(e.data.video.title);
-          watch.set("classification")(e.data.video.classification);
-          watch.set("description")(e.data.video.description);
-          watch.set("videoLength")(e.data.video.videoLength);
-          watch.set("thumb")(e.data.video.thumb);
-          watch.set("icon")(e.data.video.icon);
-          watch.set("views")(e.data.video.views);
-          watch.set("likes")(e.data.video.likes);
-          watch.set("dislikes")(e.data.video.dislikes);
-          watch.set("liked")(e.data.video.liked);
-          watch.set("disliked")(e.data.video.disliked);
-          watch.set("creationDate")(e.data.video.creationDate);
+          var videoData = watch.get("videoData");
+          videoData.guid = e.data.video.guid;
+          videoData.id = e.data.video.id;
+          videoData.title = e.data.video.title;
+          videoData.classification = e.data.video.classification;
+          videoData.description = e.data.video.description;
+          videoData.videoLength = e.data.video.videoLength;
+          videoData.thumb = e.data.video.thumb;
+          videoData.icon = e.data.video.icon;
+          videoData.views = e.data.video.views;
+          videoData.likes = e.data.video.likes;
+          videoData.dislikes = e.data.video.dislikes;
+          videoData.liked = e.data.video.liked;
+          videoData.creationDate = e.data.video.creationDate;
+          watch.set("videoData")(videoData);
           watch.set("comments")([]);
           if (e.data.video.channel) {
             channel.set("id")(e.data.video.channel.id);
@@ -110,6 +113,8 @@ function Watch(props: any) {
           <WatchFeed videos={feed.get("watchFeed")} />
         </div>
       </div>
+      <ShareVideoModal />
+      <ReportVideoModal />
     </div>
   );
 }

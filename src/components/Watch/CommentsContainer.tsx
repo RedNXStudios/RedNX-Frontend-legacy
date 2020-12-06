@@ -26,7 +26,7 @@ function CommentsContainer(props: any) {
       return;
     }
     Net.post("/api/comment/new", {
-      videoId: watch.get("id"),
+      videoId: watch.get("videoData").id,
       message: tempComment,
     }).then((e) => {
       if (e.data && e.data.success) {

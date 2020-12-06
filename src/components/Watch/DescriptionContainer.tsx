@@ -49,23 +49,25 @@ function DescriptionContainer(props: any) {
   function likeVideo(e: React.MouseEvent, isLike: boolean | null) {
     e.preventDefault();
     if (!auth.get("isAuthenticated")) return;
-    Net.post("/api/video/like", { id: watch.get("id"), isLike }).then(
+    Net.post("/api/video/like", { id: watch.get("videoData").id, isLike }).then(
       (e) => {
         if (e.data && e.data.error) {
           alert("Failed to like");
           return;
         }
         if (e.data && e.data.success) {
+          var videoData = watch.get("videoData");
           if (isLike == null) {
-            watch.set("liked")(false);
-            watch.set("disliked")(false);
+            videoData.liked = false;
+            videoData.disliked = false;
           } else if (isLike === true) {
-            watch.set("liked")(true);
-            watch.set("disliked")(false);
+            videoData.liked = true;
+            videoData.disliked = false;
           } else {
-            watch.set("liked")(false);
-            watch.set("disliked")(true);
+            videoData.liked = false;
+            videoData.disliked = true;
           }
+          watch.set("videoData")(videoData);
         }
       }
     );
@@ -104,10 +106,10 @@ function DescriptionContainer(props: any) {
             <button
               type="button"
               className={`btn btn-sm ${
-                watch.get("liked") ? "btn-danger" : ""
+                watch.get("videoData").liked ? "btn-danger" : ""
               }`}
               onClick={(e) =>
-                likeVideo(e, watch.get("liked") ? null : true)
+                likeVideo(e, watch.get("videoData").liked ? null : true)
               }
             >
               <FontAwesomeIcon icon="thumbs-up" className={styles.icon} />
@@ -116,10 +118,10 @@ function DescriptionContainer(props: any) {
             <button
               type="button"
               className={`btn btn-sm ${
-                watch.get("disliked") ? "btn-danger" : ""
+                watch.get("videoData").disliked ? "btn-danger" : ""
               }`}
               onClick={(e) =>
-                likeVideo(e, watch.get("disliked") ? null : false)
+                likeVideo(e, watch.get("videoData").disliked ? null : false)
               }
             >
               <FontAwesomeIcon icon="thumbs-down" className={styles.icon} />
@@ -127,7 +129,7 @@ function DescriptionContainer(props: any) {
             </button>
           </div>
           <div className={styles.mobileBox}>
-            <button type="button" className="btn btn-sm">
+            <button type="button" className="btn btn-sm" data-toggle="modal" data-target="#shareVideoModal">
               <FontAwesomeIcon icon="share" className={styles.icon} />
               &nbsp;&nbsp; {t("page.watch.share")}
             </button>
@@ -135,7 +137,7 @@ function DescriptionContainer(props: any) {
               type="button"
               className="btn btn-sm"
               data-toggle="modal"
-              data-target="#reportModal"
+              data-target="#reportVideoModal"
               title={t("shared.report")}
             >
               <FontAwesomeIcon icon="flag" className={styles.icon} />

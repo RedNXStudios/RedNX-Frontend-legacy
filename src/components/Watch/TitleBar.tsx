@@ -36,20 +36,20 @@ function TitleBar() {
   return (
     <div className={`${styles.videoTitleContainer}`}>
       <div className={`${styles.videoIcon}`}>
-        {watch.get("icon") && (
-          <img src={`http://s3.tryhosting.com.br/video/icon/${watch.get("icon")}`} alt="Icon" />
+        {watch.get("videoData").icon && (
+          <img src={`http://s3.tryhosting.com.br/video/icon/${watch.get("videoData").icon}`} alt="Icon" />
         )}
       </div>
       <div
         className={`${styles.videoClassification}`}
         style={{
-          backgroundColor: getClassificationColor(watch.get("classification")),
+          backgroundColor: getClassificationColor(watch.get("videoData").classification),
         }}
       >
-        {getClassification(watch.get("classification"))}
+        {getClassification(watch.get("videoData").classification)}
       </div>
       <div className={`${styles.videoTitle}`}>
-        <h5>{watch.get("title")}</h5>
+        <h5>{watch.get("videoData").title}</h5>
       </div>
     </div>
   );

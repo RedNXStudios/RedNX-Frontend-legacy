@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";
 import {
@@ -9,6 +9,8 @@ import {
 } from "../../utils/Conversion";
 
 import styles from "./VideoThumbnail.module.scss";
+import UnduxStores from "../../undux/UnduxStores";
+import Net from "../../utils/Net";
 
 interface PropType {
   data?: any;
@@ -17,6 +19,47 @@ interface PropType {
 
 function VideoThumbnail(props: PropType) {
   let { t } = useTranslation();
+  let { watch, channel } = UnduxStores.useStores();
+  let history = useHistory();
+
+  function openVideo(guid: string) {
+    Net.post("/api/video/get", { guid }).then((e) => {
+      if (e.data && e.data.error) {
+        console.error("Failed to get video " + guid);
+        history.push("/");
+        return;
+      }
+      if (e.data && e.data.video) {
+        var videoData = watch.get("videoData");
+        videoData.guid = e.data.video.guid;
+        videoData.id = e.data.video.id;
+        videoData.title = e.data.video.title;
+        videoData.classification = e.data.video.classification;
+        videoData.description = e.data.video.description;
+        videoData.videoLength = e.data.video.videoLength;
+        videoData.thumb = e.data.video.thumb;
+        videoData.icon = e.data.video.icon;
+        videoData.views = e.data.video.views;
+        videoData.likes = e.data.video.likes;
+        videoData.dislikes = e.data.video.dislikes;
+        videoData.liked = e.data.video.liked;
+        videoData.creationDate = e.data.video.creationDate;
+        watch.set("videoData")(videoData);
+        watch.set("comments")([]);
+        if (e.data.video.channel) {
+          channel.set("id")(e.data.video.channel.id);
+          channel.set("guid")(e.data.video.channel.guid);
+          channel.set("link")(e.data.video.channel.link);
+          channel.set("name")(e.data.video.channel.name);
+          channel.set("description")(e.data.video.channel.description);
+          channel.set("picture")(e.data.video.channel.picture);
+          channel.set("followers")(e.data.video.channel.followers);
+          channel.set("following")(e.data.video.channel.following);
+        }
+        history.push("/watch/" + guid);
+      }
+    });
+  }
 
   return (
     <div className={styles.videoThumbnail}>
@@ -27,9 +70,9 @@ function VideoThumbnail(props: PropType) {
           }`}
         >
           {props.data.thumb != null && (
-            <Link
+            <div
               className={styles.thumbnailContainer}
-              to={`/watch/${props.data.guid}`}
+              onClick={() => openVideo(props.data.guid)}
             >
               <div className={styles.thumbnailContainer}>
                 <img
@@ -64,7 +107,7 @@ function VideoThumbnail(props: PropType) {
                   </div>
                 </div>
               </div>
-            </Link>
+            </div>
           )}
         </div>
         <div className={styles.videoInfo}>
@@ -91,9 +134,9 @@ function VideoThumbnail(props: PropType) {
           >
             <div className={styles.videoTitle}>
               {props.data && (
-                <Link to={`/watch/${props.data.guid}`}>
+                <div className={styles.videoTitleCursor} onClick={() => openVideo(props.data.guid)}>
                   <h5 className={styles.linkLimit}>{props.data.title}</h5>
-                </Link>
+                </div>
               )}
             </div>
             {!props.channelVideo && (
@@ -112,69 +155,6 @@ function VideoThumbnail(props: PropType) {
       </div>
     </div>
   );
-  /*return (
-    <div
-      className={`${styles.videoThumb} col-xs-12 col-sm-12 col-lg-6 col-xl-3`}
-    >
-      <Link to={`/watch/${props.data.guid}`} className={`${styles.videoLink}`}>
-        <div className={`${styles.video}`}>
-          <div className={styles.overlay}>
-            <div className={styles.playIcon}>
-              <FontAwesomeIcon icon="play" size="lg" />
-            </div>
-            <div className={styles.spaceConsumer}></div>
-            <div className={styles.videoData}>
-              <div className={`${styles.infoOverlay} float-left`}>
-                <p>
-                  {t("thumbnail.view", {
-                    count: props.data.views,
-                    countText: numberToText(props.data.views, t),
-                  })}
-                </p>
-                <p>
-                  {t("time.ago", {
-                    time: calculateVideoPostingTime(props.data.creationDate, t),
-                  })}
-                </p>
-              </div>
-              <div
-                className={`${styles.infoOverlay} ${styles.playTime} float-right`}
-              >
-                {numberToTime(props.data.videoLength)}
-              </div>
-            </div>
-          </div>
-          <img
-            src={`http://s3.tryhosting.com.br/pp/${props.data.thumb}.webp`}
-            width="1280"
-            height="720"
-            alt="Thumbnail do video"
-            className={styles.image}
-          />
-        </div>
-      </Link>
-      <div className={styles.videoInfo}>
-        <div className={styles.channelImage}>
-          <Link to={`/channel/${props.data.channel.link}`}>
-            <img
-              src={`http://s3.tryhosting.com.br/pp/${props.data.channel.picture}.webp`}
-              alt="Avatar do Canal"
-            />
-          </Link>
-        </div>
-        <div className={styles.videoFooter}>
-          <p className={styles.videoTitle}>
-            <Link to={`/watch/${props.data.guid}`}>{props.data.title}</Link>
-          </p>
-          <div className={styles.channelName}>
-            <Link to={`/channel/${props.data.channel.link}`}>
-              {props.data.channel.name}
-            </Link>
-          </div>
-        </div>
-      </div>
-    </div>
-  );*/
 }
 
 export default VideoThumbnail;

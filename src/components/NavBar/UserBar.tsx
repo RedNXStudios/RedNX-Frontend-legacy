@@ -86,11 +86,13 @@ function NewUserBar() {
                 <FontAwesomeIcon icon="sign-in-alt" />
                 Register
               </Link>
-              <a className="dropdown-item" onClick={logOut}>
-                <FontAwesomeIcon icon="sign-out-alt" />
-                Log out
-              </a>
             </div>
+          )}
+          {auth.get("isAuthenticated") && (
+            <a className="dropdown-item" onClick={logOut}>
+              <FontAwesomeIcon icon="sign-out-alt" />
+              Log out
+            </a>
           )}
         </div>
       </li>
