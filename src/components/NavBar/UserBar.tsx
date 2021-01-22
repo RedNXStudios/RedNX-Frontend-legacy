@@ -22,7 +22,6 @@ function NewUserBar() {
           className="nav-link"
           href="#"
           data-toggle="dropdown"
-          aria-haspopup="true"
           aria-expanded="false"
         >
           <FontAwesomeIcon icon="bell" />
@@ -34,7 +33,6 @@ function NewUserBar() {
             className={`nav-link ${styles.profilePicture}`}
             href="#"
             data-toggle="dropdown"
-            aria-haspopup="true"
             aria-expanded="false"
           >
             <div className={styles.pictureContainer}>
@@ -54,7 +52,6 @@ function NewUserBar() {
             className="nav-link"
             href="#"
             data-toggle="dropdown"
-            aria-haspopup="true"
             aria-expanded="false"
           >
             <FontAwesomeIcon icon="user" />

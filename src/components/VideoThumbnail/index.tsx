@@ -19,7 +19,7 @@ interface PropType {
 
 function VideoThumbnail(props: PropType) {
   let { t } = useTranslation();
-  let { watch, channel } = UnduxStores.useStores();
+  let { feed, watch, channel } = UnduxStores.useStores();
   let history = useHistory();
 
   function openVideo(guid: string) {
@@ -56,6 +56,14 @@ function VideoThumbnail(props: PropType) {
           channel.set("followers")(e.data.video.channel.followers);
           channel.set("following")(e.data.video.channel.following);
         }
+        Net.get("/api/feed/new").then((e) => {
+          feed.set("watchFeed")(e.data.videos);
+        });
+        Net.post("/api/comment/get", { videoId: e.data.video.id }).then((e) => {
+          if(e.data) {
+            watch.set("comments")(e.data);
+          }
+        });
         history.push("/watch/" + guid);
       }
     });

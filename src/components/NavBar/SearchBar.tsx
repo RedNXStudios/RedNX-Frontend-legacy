@@ -1,6 +1,6 @@
 import React from "react";
 import UnduxStores, { StoreProps } from "../../undux/UnduxStores";
-import { useHistory } from "react-router-dom";
+//import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { withTranslation, WithTranslation } from "react-i18next";
 
@@ -28,8 +28,8 @@ class SearchBar extends React.Component<PropType, IState> {
 
   handleSubmit = (e: any) => {
     e.preventDefault();
-    const history = useHistory();
-    history.push("/search/" + this.state.searchContent);
+    /*const history = useHistory();
+    history.push("/search/" + this.state.searchContent);*/
   }
 
   render() {
