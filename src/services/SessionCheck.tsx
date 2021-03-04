@@ -8,10 +8,12 @@ interface IProps {
 
 function SessionCheck(props: IProps) {
   let { auth } = UnduxStores.useStores();
-  if (hasAuthenticationToken()) {
+  if (hasAuthenticationToken() && !auth.get("isAuthenticated")) {
     Net.get("/api/auth/checksession").then((response) => {
       if (response.data && response.data.isValid === false) {
         auth.set("token")(null);
+      } else {
+        auth.set("isAuthenticated")(true);
       }
     });
   }

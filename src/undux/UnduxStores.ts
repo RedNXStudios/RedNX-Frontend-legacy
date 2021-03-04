@@ -1,7 +1,6 @@
 import { EffectsAs, Store, createConnectedStoreAs } from "undux";
 import VideoDataModel from "../models/VideoDataModel";
 import {
-  hasAuthenticationToken,
   getAuthenticationToken,
 } from "../utils/LocalStorage";
 import effects from "./UnduxEffects";
@@ -12,7 +11,7 @@ type Auth = {
 };
 
 let initialAuthState: Auth = {
-  isAuthenticated: hasAuthenticationToken(),
+  isAuthenticated: false,
   token: getAuthenticationToken(),
 };
 
